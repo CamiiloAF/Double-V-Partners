@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+
+import 'app_colors_theme.dart';
+
+class AppTextTheme {
+  static const textThemeLight = TextTheme(
+    displaySmall: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 28,
+        fontFamily: 'Poppins',
+        color: AppColorsTheme.headline,
+        letterSpacing: 0.6),
+    headlineMedium: TextStyle(
+        fontSize: 24,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w700,
+        color: AppColorsTheme.headline,
+        letterSpacing: 0.45),
+    headlineSmall: TextStyle(
+        fontSize: 20,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w700,
+        color: AppColorsTheme.headline,
+        letterSpacing: 0),
+    titleLarge: TextStyle(
+        fontSize: 18,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w700,
+        color: AppColorsTheme.headline,
+        letterSpacing: 0.15),
+    titleMedium: TextStyle(
+        fontSize: 18,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w700,
+        color: AppColorsTheme.subtitle,
+        letterSpacing: 0.3),
+    bodyLarge: TextStyle(
+        fontSize: 14,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w400,
+        color: AppColorsTheme.bodytext,
+        letterSpacing: 0.3),
+    bodyMedium: TextStyle(
+        fontSize: 14,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w400,
+        color: AppColorsTheme.bodytext,
+        letterSpacing: 0.2),
+    labelLarge: TextStyle(
+        fontSize: 20,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w700,
+        color: AppColorsTheme.primary,
+        letterSpacing: 0.38),
+    bodySmall: TextStyle(
+        fontSize: 15,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w600,
+        color: AppColorsTheme.bodytext,
+        letterSpacing: 0.3),
+    labelSmall: TextStyle(
+        fontSize: 12,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w400,
+        color: AppColorsTheme.bodytext,
+        letterSpacing: 0.17),
+    displayLarge: TextStyle(
+        fontSize: 28,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w900,
+        color: AppColorsTheme.headline,
+        letterSpacing: -1.5),
+    displayMedium: TextStyle(
+        fontSize: 60,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w300,
+        color: AppColorsTheme.headline,
+        letterSpacing: -0.5),
+    titleSmall: TextStyle(
+        fontSize: 14,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w600,
+        color: AppColorsTheme.subtitle,
+        letterSpacing: 0.1),
+  );
+}

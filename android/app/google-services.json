@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "75629658891",
+    "project_id": "double-v-partners-648a3",
+    "storage_bucket": "double-v-partners-648a3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75629658891:android:b6e0ebd5a2b0b3dbced80e",
+        "android_client_info": {
+          "package_name": "com.camiloagudelo.double_v_partners_tech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwetiuf85K2CAlTB73zgjKkpOW4gXoT1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
