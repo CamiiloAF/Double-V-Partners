@@ -88,7 +88,10 @@ class PersonalInformationPage extends StatelessWidget {
                         context
                             .read<UpdateProfileCubit>()
                             .updateUserInformation(
-                              value.copyWith(id: currentUser.id),
+                              value.copyWith(
+                                id: currentUser.id,
+                                addresses: currentUser.addresses,
+                              ),
                             );
                       },
                     );
