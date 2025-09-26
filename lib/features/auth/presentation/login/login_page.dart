@@ -11,11 +11,11 @@ import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
 import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
 import '../../../../shared/widgets/button/custom_button_widget.dart';
+import '../../../../shared/widgets/containers/section_container.dart';
 import '../../../../shared/widgets/forms/custom_form.dart';
 import '../../../../shared/widgets/inputs/custom_text_field.dart';
 import '../../domain/model/user_auth.dart';
 import '../cubit/login_cubit.dart';
-import '../sign_up/widgets/section_container.dart';
 import 'strings.dart';
 
 class LoginPage extends StatelessWidget {

@@ -5,9 +5,9 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../core/di/injection.dart';
 import '../../../core/domain/user.dart';
-import '../../../features/auth/presentation/sign_up/widgets/section_container.dart';
 import '../../theme/app_colors_theme.dart';
 import '../../widgets/button/custom_button_widget.dart';
+import '../../widgets/containers/section_container.dart';
 import '../../widgets/forms/custom_form.dart';
 import '../../widgets/inputs/custom_text_field.dart';
 import 'cubit/personal_info_cubit.dart';

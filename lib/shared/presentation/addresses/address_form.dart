@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/domain/result_state.dart';
 import '../../../features/auth/domain/model/address.dart';
-import '../../../features/auth/presentation/sign_up/widgets/section_container.dart';
 import '../../theme/app_colors_theme.dart';
+import '../../widgets/containers/section_container.dart';
 import '../../widgets/forms/custom_form.dart';
 import '../../widgets/inputs/custom_text_field.dart';
 import '../../widgets/inputs/drop_down_filter.dart';
