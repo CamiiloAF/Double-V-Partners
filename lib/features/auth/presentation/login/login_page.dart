@@ -5,15 +5,15 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
+import '../../../../core/domain/user.dart';
 import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
 import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
 import '../../../../shared/widgets/button/custom_button_widget.dart';
 import '../../../../shared/widgets/forms/custom_form.dart';
 import '../../../../shared/widgets/inputs/custom_text_field.dart';
-import '../../../../core/domain/user.dart';
 import '../../domain/model/user_auth.dart';
-import '../cubit/current_user_cubit.dart';
+import '../../../../core/presentation/cubit/current_user_cubit.dart';
 import '../cubit/login_cubit.dart';
 import '../sign_up/widgets/section_container.dart';
 import 'strings.dart';
@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
 
     final userAuth = UserAuthModel(email: email, password: password);
 
-    context.read<LoginCubit>().loginWithEmailAndPassword(userAuth);
+    await context.read<LoginCubit>().loginWithEmailAndPassword(userAuth);
   }
 
   void _listener(BuildContext context, ResultState<UserModel> state) {
@@ -93,11 +93,9 @@ class _LoginViewState extends State<LoginView> {
         validationMessages: {
           ValidationMessage.required: (_) => LoginStrings.requiredField,
           ValidationMessage.email: (_) => LoginStrings.invalidEmail,
-          ValidationMessage.minLength: (data) =>
-              LoginStrings.minLengthError(
-                (data as Map<String, dynamic>)['requiredLength']
-                    .toString(),
-              ),
+          ValidationMessage.minLength: (data) => LoginStrings.minLengthError(
+            (data as Map<String, dynamic>)['requiredLength'].toString(),
+          ),
         },
         child: BlocConsumer<LoginCubit, ResultState<UserModel>>(
           listener: _listener,
@@ -145,7 +143,9 @@ class _LoginViewState extends State<LoginView> {
                   // Link para registro
                   Center(
                     child: TextButton(
-                      onPressed: () => context.pushNamed(AppRoutes.signUpPersonalInformation),
+                      onPressed: () => context.pushNamed(
+                        AppRoutes.signUpPersonalInformation,
+                      ),
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: const TextSpan(
@@ -181,12 +181,12 @@ class _LoginViewState extends State<LoginView> {
       title: 'Credenciales de Acceso',
       icon: Icons.login_outlined,
       children: [
-        CustomTextField(
+        const CustomTextField(
           formControlName: _emailInput,
           labelText: LoginStrings.email,
           hintText: 'ejemplo@correo.com',
           keyboardType: TextInputType.emailAddress,
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.email_outlined,
             color: AppColorsTheme.subtitle,
           ),
@@ -202,7 +202,8 @@ class _LoginViewState extends State<LoginView> {
             color: AppColorsTheme.subtitle,
           ),
           suffixIcon: IconButton(
-            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+            onPressed: () =>
+                setState(() => _obscurePassword = !_obscurePassword),
             icon: Icon(
               _obscurePassword ? Icons.visibility : Icons.visibility_off,
               color: AppColorsTheme.subtitle,

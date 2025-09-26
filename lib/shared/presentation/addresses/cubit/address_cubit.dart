@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:double_v_partners_tech/core/exceptions/domain_exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../../core/domain/result_state.dart';
+import '../../../../core/exceptions/domain_exception.dart';
 import '../../../../core/services/location_service.dart';
-import '../../domain/model/address.dart';
+import '../../../../features/auth/domain/model/address.dart';
 
 part 'address_cubit.freezed.dart';
 part 'address_state.dart';
@@ -70,7 +70,7 @@ class AddressCubit extends Cubit<AddressState> {
     if (index >= state.addresses.length) return;
 
     final updatedAddresses = List<AddressFormData>.from(state.addresses);
-    var address = updatedAddresses[index];
+    final address = updatedAddresses[index];
 
     updatedAddresses[index] = address;
     emit(state.copyWith(addresses: updatedAddresses));
@@ -119,7 +119,7 @@ class AddressCubit extends Cubit<AddressState> {
     var address = updatedAddresses[index];
 
     if (value == true) {
-      for (int i = 0; i < updatedAddresses.length; i++) {
+      for (var i = 0; i < updatedAddresses.length; i++) {
         if (i != index) {
           updatedAddresses[i] = updatedAddresses[i].copyWith(isDefault: false);
         }
@@ -162,7 +162,7 @@ class AddressCubit extends Cubit<AddressState> {
       return 'Debes marcar al menos una dirección como principal';
     }
 
-    for (int i = 0; i < state.addresses.length; i++) {
+    for (var i = 0; i < state.addresses.length; i++) {
       final address = state.addresses[i];
       final validation = _validateSingleAddress(address, i + 1);
       if (validation != null) return validation;

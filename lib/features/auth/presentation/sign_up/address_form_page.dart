@@ -1,29 +1,27 @@
-import 'package:double_v_partners_tech/core/di/injection.dart';
-import 'package:double_v_partners_tech/core/extensions/go_router.dart';
-import 'package:double_v_partners_tech/features/auth/presentation/cubit/address_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
 import '../../../../core/domain/user.dart';
+import '../../../../core/extensions/go_router.dart';
 import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
 import '../../../../shared/widgets/button/custom_button_widget.dart';
-import '../cubit/current_user_cubit.dart';
+import '../../../../shared/widgets/containers/address_button_container.dart';
+import '../../../../shared/presentation/addresses/cubit/address_cubit.dart';
+import '../../../../core/presentation/cubit/current_user_cubit.dart';
 import '../cubit/sign_up/sign_up_cubit.dart';
-import '../sign_up/widgets/address_form.dart';
-import 'params.dart';
+import '../../../../shared/presentation/addresses/address_form.dart';
 
-class AddressFormPage extends StatefulWidget {
-  const AddressFormPage({super.key, required this.params});
-
-  final AddressPageParams params;
+class SignUpAddressFormPage extends StatefulWidget {
+  const SignUpAddressFormPage({super.key});
 
   @override
-  State<AddressFormPage> createState() => _AddressFormPageState();
+  State<SignUpAddressFormPage> createState() => _SignUpAddressFormPageState();
 }
 
-class _AddressFormPageState extends State<AddressFormPage> {
+class _SignUpAddressFormPageState extends State<SignUpAddressFormPage> {
   @override
   void initState() {
     super.initState();
@@ -47,7 +45,7 @@ class _AddressFormPageState extends State<AddressFormPage> {
       return;
     }
 
-    context.read<SignUpCubit>().submitSignUp(
+    await context.read<SignUpCubit>().submitSignUp(
       state.addresses.map((e) => e.toAddressModel()).toList(),
     );
   }
@@ -59,9 +57,9 @@ class _AddressFormPageState extends State<AddressFormPage> {
       child: Scaffold(
         backgroundColor: AppColorsTheme.scaffold,
         appBar: AppBar(
-          title: Text(
-            widget.params.title,
-            style: const TextStyle(
+          title: const Text(
+            'Direcciones',
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
               color: AppColorsTheme.headline,
@@ -95,26 +93,13 @@ class _AddressFormPageState extends State<AddressFormPage> {
             builder: (context, state) {
               return Column(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(24),
-                      child: AddressForm(
-                        initialAddresses: widget.params.initialAddresses,
-                      ),
+                      padding: EdgeInsets.all(24),
+                      child: AddressForm(),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: AppColorsTheme.surface,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: .05),
-                          blurRadius: 10,
-                          offset: const Offset(0, -2),
-                        ),
-                      ],
-                    ),
+                  AddressButtonContainer(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [

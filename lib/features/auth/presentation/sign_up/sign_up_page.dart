@@ -1,7 +1,3 @@
-import 'package:double_v_partners_tech/features/auth/presentation/addresses/params.dart';
-import 'package:double_v_partners_tech/shared/router/app_routes.dart';
-import 'package:double_v_partners_tech/shared/widgets/button/custom_button_widget.dart';
-import 'package:double_v_partners_tech/shared/widgets/forms/custom_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../../core/domain/result_state.dart';
+import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
+import '../../../../shared/widgets/button/custom_button_widget.dart';
+import '../../../../shared/widgets/forms/custom_form.dart';
 import '../../../../shared/widgets/inputs/custom_text_field.dart';
 import '../cubit/sign_up/sign_up_cubit.dart';
 import 'widgets/section_container.dart';
@@ -57,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: CustomForm(
               formGroup: state.formGroup,
               fields: [
-                Text(
+                const Text(
                   '¡Bienvenido!',
                   style: TextStyle(
                     fontSize: 28,
@@ -66,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
+                const Text(
                   'Completa la información para crear tu cuenta',
                   style: TextStyle(
                     fontSize: 16,
@@ -75,24 +74,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(height: 32),
                 _buildPersonalInfoSection(context, state),
-                // const SizedBox(height: 32),
-                // _buildAddressSection(context, state),
                 const SizedBox(height: 40),
-                // _buildSubmitButton(context, state),
-                // const SizedBox(height: 24),
                 ReactiveFormConsumer(
                   builder: (context, formGroup, child) {
                     return CustomButtonWidget(
                       text: 'Continuar',
                       onPressed: formGroup.valid
                           ? () {
-                              context.pushNamed(
-                                AppRoutes.signUpAddress,
-                                extra: AddressPageParams(
-                                  initialAddresses: [],
-                                  title: 'Direcciones',
-                                ),
-                              );
+                              context.pushNamed(AppRoutes.signUpAddress);
                             }
                           : null,
                     );

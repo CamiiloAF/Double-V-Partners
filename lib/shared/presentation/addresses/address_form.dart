@@ -1,22 +1,17 @@
-import 'package:double_v_partners_tech/core/domain/result_state.dart';
-import 'package:double_v_partners_tech/shared/widgets/forms/custom_form.dart';
-import 'package:double_v_partners_tech/shared/widgets/inputs/drop_down_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../shared/theme/app_colors_theme.dart';
-import '../../../../../shared/widgets/inputs/custom_text_field.dart';
-import '../../cubit/address_cubit.dart';
-import 'section_container.dart';
+import '../../../core/domain/result_state.dart';
+import '../../../features/auth/presentation/sign_up/widgets/section_container.dart';
+import '../../theme/app_colors_theme.dart';
+import '../../widgets/forms/custom_form.dart';
+import '../../widgets/inputs/custom_text_field.dart';
+import '../../widgets/inputs/drop_down_filter.dart';
+import 'cubit/address_cubit.dart';
 
 class AddressForm extends StatelessWidget {
-  const AddressForm({
-    super.key,
-    this.onAddressesChanged,
-    this.initialAddresses = const [],
-  });
+  const AddressForm({super.key, this.initialAddresses = const []});
 
-  final Function(List<dynamic> addresses)? onAddressesChanged;
   final List<dynamic> initialAddresses;
 
   @override
@@ -32,15 +27,13 @@ class AddressForm extends StatelessWidget {
         }
         return cubit;
       },
-      child: _AddressFormView(onAddressesChanged: onAddressesChanged),
+      child: const _AddressFormView(),
     );
   }
 }
 
 class _AddressFormView extends StatefulWidget {
-  const _AddressFormView({this.onAddressesChanged});
-
-  final Function(List<dynamic> addresses)? onAddressesChanged;
+  const _AddressFormView();
 
   @override
   State<_AddressFormView> createState() => _AddressFormViewState();
@@ -56,7 +49,7 @@ class _AddressFormViewState extends State<_AddressFormView> {
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error cargando ubicaciones: ${error.toString()}'),
+              content: Text('Error cargando ubicaciones: ${error}'),
               backgroundColor: AppColorsTheme.error,
               behavior: SnackBarBehavior.floating,
             ),
@@ -65,9 +58,9 @@ class _AddressFormViewState extends State<_AddressFormView> {
       },
       builder: (context, state) {
         if (state.isLoadingLocations) {
-          return Center(
+          return const Center(
             child: Padding(
-              padding: const EdgeInsets.all(48.0),
+              padding: const EdgeInsets.all(48),
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
                   AppColorsTheme.primary,
@@ -160,7 +153,7 @@ class _AddressFormViewState extends State<_AddressFormView> {
           onChanged: (value) {
             context.read<AddressCubit>().onChangeCountry(index, value ?? '');
           },
-          items: ['Colombia'],
+          items: const ['Colombia'],
           prefixIcon: const Icon(Icons.public, color: AppColorsTheme.subtitle),
           showSearchBox: false,
         ),
@@ -294,10 +287,10 @@ class _AddressFormViewState extends State<_AddressFormView> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColorsTheme.info.withValues(alpha: .2)),
       ),
-      child: Row(
+      child: const Row(
         children: [
           Icon(Icons.info_outline, color: AppColorsTheme.info, size: 20),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,8 +303,8 @@ class _AddressFormViewState extends State<_AddressFormView> {
                     color: AppColorsTheme.info,
                   ),
                 ),
-                const SizedBox(height: 4),
-                const Text(
+                SizedBox(height: 4),
+                Text(
                   'Puedes agregar múltiples direcciones y marcar una como principal. La dirección principal será tu dirección por defecto.',
                   style: TextStyle(
                     fontSize: 12,

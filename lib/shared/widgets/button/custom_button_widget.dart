@@ -14,18 +14,18 @@ class CustomButtonWidget extends StatefulWidget {
   final bool isLoading;
 
   const CustomButtonWidget({
-    super.key,
-    this.enabled = true,
+    required this.onPressed,
     required this.text,
+    this.color,
+    this.padding,
+    this.enabled = true,
     this.textSize = 14,
     this.fontWeight = FontWeight.bold,
     this.outline = false,
     this.noBorder = false,
-    required this.onPressed,
-    this.color,
-    this.padding,
     this.shrinkWrap = false,
     this.isLoading = false,
+    super.key,
   }) : assert(
          !noBorder || !outline,
          "noBorder and outline can't be active together.",
@@ -53,12 +53,13 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
           onPressed: widget.enabled ? widget.onPressed : null,
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all<Color>(
-              (widget.outline ||
-                      widget.noBorder ||
-                      widget.onPressed == null ||
-                      !widget.enabled)
-                  ? Colors.grey
-                  : widget.color ?? primaryColor,
+              widget.outline
+                  ? Colors.transparent
+                  : (widget.noBorder ||
+                          widget.onPressed == null ||
+                          !widget.enabled)
+                      ? Colors.grey
+                      : widget.color ?? primaryColor,
             ),
             padding: WidgetStateProperty.all<EdgeInsetsGeometry?>(
               widget.padding,

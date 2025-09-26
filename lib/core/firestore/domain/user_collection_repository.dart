@@ -1,4 +1,4 @@
-import 'package:double_v_partners_tech/core/domain/user.dart';
+import '../../domain/user.dart';
 
 abstract class UserCollectionRepository {
   Future<UserModel> addToUserCollection(UserModel userModel);

@@ -4,13 +4,13 @@ import '../../../../../shared/theme/app_colors_theme.dart';
 
 class FormSectionContainer extends StatelessWidget {
   const FormSectionContainer({
-    super.key,
     required this.title,
     required this.icon,
     required this.children,
+    this.showRemoveButton = false,
     this.trailing,
     this.onRemove,
-    this.showRemoveButton = false,
+    super.key,
   });
 
   final String title;
