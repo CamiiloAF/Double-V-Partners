@@ -6,6 +6,7 @@ import 'package:reactive_forms/reactive_forms.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
 import '../../../../shared/router/app_routes.dart';
+import '../../../../shared/theme/app_colors_theme.dart';
 import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
 import '../../../../shared/widgets/button/custom_button_widget.dart';
 import '../../../../shared/widgets/forms/custom_form.dart';
@@ -14,6 +15,7 @@ import '../../../../core/domain/user.dart';
 import '../../domain/model/user_auth.dart';
 import '../cubit/current_user_cubit.dart';
 import '../cubit/login_cubit.dart';
+import '../sign_up/widgets/section_container.dart';
 import 'strings.dart';
 
 class LoginPage extends StatelessWidget {
@@ -38,6 +40,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   static const _emailInput = 'email';
   static const _passwordInput = 'password';
+  bool _obscurePassword = true;
 
   final formGroup = FormGroup({
     _emailInput: FormControl<String>(
@@ -71,62 +74,142 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SizedBox(
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(LoginStrings.welcome, style: theme.textTheme.displaySmall),
-            const SizedBox(height: 20),
-            Text(LoginStrings.login, style: theme.textTheme.headlineMedium),
-            ReactiveFormConfig(
-              validationMessages: {
-                ValidationMessage.required: (_) => LoginStrings.requiredField,
-                ValidationMessage.email: (_) => LoginStrings.invalidEmail,
-                ValidationMessage.minLength: (data) =>
-                    LoginStrings.minLengthError(
-                      (data as Map<String, dynamic>)['requiredLength']
-                          .toString(),
-                    ),
-              },
-              child: BlocConsumer<LoginCubit, ResultState<UserModel>>(
-                listener: _listener,
-                builder: (context, state) {
-                  return CustomForm(
-                    formGroup: formGroup,
-                    fields: [
-                      CustomTextField(
-                        formControlName: _emailInput,
-                        labelText: LoginStrings.email,
-                      ),
-                      const SizedBox(height: 10),
-                      CustomTextField(
-                        formControlName: _passwordInput,
-                        labelText: LoginStrings.password,
-                        obscureText: true,
-                      ),
-                      const SizedBox(height: 10),
-                      ReactiveFormConsumer(
-                        builder: (_, form, child) {
-                          return CustomButtonWidget(
-                            text: LoginStrings.loginButton,
-                            enabled: form.valid,
-                            onPressed: form.valid ? () => doLogin(form) : null,
-                            isLoading: state is Loading,
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
+      backgroundColor: AppColorsTheme.scaffold,
+      appBar: AppBar(
+        title: const Text(
+          'Iniciar Sesión',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: AppColorsTheme.headline,
+          ),
+        ),
+        backgroundColor: AppColorsTheme.surface,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: ReactiveFormConfig(
+        validationMessages: {
+          ValidationMessage.required: (_) => LoginStrings.requiredField,
+          ValidationMessage.email: (_) => LoginStrings.invalidEmail,
+          ValidationMessage.minLength: (data) =>
+              LoginStrings.minLengthError(
+                (data as Map<String, dynamic>)['requiredLength']
+                    .toString(),
               ),
-            ),
-          ],
+        },
+        child: BlocConsumer<LoginCubit, ResultState<UserModel>>(
+          listener: _listener,
+          builder: (context, state) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: CustomForm(
+                formGroup: formGroup,
+                fields: [
+                  // Header de bienvenida con el mismo estilo del sign up
+                  const Text(
+                    '¡Bienvenido de vuelta!',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: AppColorsTheme.headline,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Ingresa tus credenciales para acceder',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColorsTheme.subtitle,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+
+                  // Sección de formulario con el mismo contenedor del sign up
+                  _buildLoginSection(),
+                  const SizedBox(height: 40),
+
+                  // Botón de login
+                  ReactiveFormConsumer(
+                    builder: (_, form, child) {
+                      return CustomButtonWidget(
+                        text: LoginStrings.loginButton,
+                        onPressed: form.valid ? () => doLogin(form) : null,
+                        isLoading: state is Loading,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Link para registro
+                  Center(
+                    child: TextButton(
+                      onPressed: () => context.pushNamed(AppRoutes.signUpPersonalInformation),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColorsTheme.subtitle,
+                          ),
+                          children: [
+                            TextSpan(text: '¿No tienes cuenta? '),
+                            TextSpan(
+                              text: 'Regístrate',
+                              style: TextStyle(
+                                color: AppColorsTheme.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildLoginSection() {
+    return FormSectionContainer(
+      title: 'Credenciales de Acceso',
+      icon: Icons.login_outlined,
+      children: [
+        CustomTextField(
+          formControlName: _emailInput,
+          labelText: LoginStrings.email,
+          hintText: 'ejemplo@correo.com',
+          keyboardType: TextInputType.emailAddress,
+          prefixIcon: const Icon(
+            Icons.email_outlined,
+            color: AppColorsTheme.subtitle,
+          ),
+        ),
+        const SizedBox(height: 20),
+        CustomTextField(
+          formControlName: _passwordInput,
+          labelText: LoginStrings.password,
+          hintText: 'Ingresa tu contraseña',
+          obscureText: _obscurePassword,
+          prefixIcon: const Icon(
+            Icons.lock_outline,
+            color: AppColorsTheme.subtitle,
+          ),
+          suffixIcon: IconButton(
+            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+            icon: Icon(
+              _obscurePassword ? Icons.visibility : Icons.visibility_off,
+              color: AppColorsTheme.subtitle,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -25,23 +25,13 @@ sealed class AddressState with _$AddressState {
 
   @override
   late final FormGroup formGroup = FormGroup({
-    countryInput: FormControl<String>(
-      value: 'Colombia',
-      validators: [Validators.required],
-    ),
+    countryInput: FormControl<String>(validators: [Validators.required]),
     departmentInput: FormControl<String>(validators: [Validators.required]),
     municipalityInput: FormControl<String>(validators: [Validators.required]),
-    streetAddressInput: FormControl<String>(
-      validators: [Validators.required, Validators.minLength(5)],
-    ),
+    streetAddressInput: FormControl<String>(validators: [Validators.required]),
     complementInput: FormControl<String>(),
     isDefaultInput: FormControl<bool>(value: false),
   });
-
-  // Getters de conveniencia
-  bool get hasAddresses => addresses.isNotEmpty;
-
-  bool get hasDefaultAddress => addresses.any((addr) => addr.isDefault);
 
   int get addressCount => addresses.length;
 
@@ -50,8 +40,6 @@ sealed class AddressState with _$AddressState {
   LocationData? get locationData => locationDataResult is Data
       ? (locationDataResult as Data<LocationData>).data
       : null;
-
-  bool get isValidForm => formGroup.valid;
 }
 
 @freezed

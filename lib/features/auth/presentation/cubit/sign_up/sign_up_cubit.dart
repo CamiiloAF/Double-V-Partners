@@ -22,6 +22,8 @@ class SignUpCubit extends Cubit<SignUpState> {
   Future<void> submitSignUp(List<AddressModel> addresses) async {
     final signUpModel = _buildSignUpModel(addresses);
 
+    emit(state.copyWith(signUpResult: Loading()));
+
     final result = await _signUpUseCase(signUpModel);
 
     result.fold(
@@ -36,7 +38,7 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   SignUpModel _buildSignUpModel(List<AddressModel> addresses) {
     return SignUpModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: '',
       firstName: state.formGroup.getFieldValue<String>(state.firstNameInput),
       lastName: state.formGroup.getFieldValue<String>(state.lastNameInput),
       email: state.formGroup.getFieldValue<String>(state.emailInput),

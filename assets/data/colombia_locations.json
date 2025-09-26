@@ -75,12 +75,6 @@
         ]
       },
       {
-        "name": "Bogotá D.C.",
-        "municipalities": [
-          "Bogotá D.C."
-        ]
-      },
-      {
         "name": "Bolívar",
         "municipalities": [
           "Cartagena",
@@ -351,6 +345,7 @@
       {
         "name": "Cundinamarca",
         "municipalities": [
+          "Bogotá",
           "Soacha",
           "Girardot",
           "Zipaquirá",

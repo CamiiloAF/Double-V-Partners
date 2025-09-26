@@ -28,13 +28,25 @@ class UserModel {
         )
       : null;
 
-  int get age {
-    final now = DateTime.now();
-    int age = now.year - birthDate.year;
-    if (now.month < birthDate.month ||
-        (now.month == birthDate.month && now.day < birthDate.day)) {
-      age--;
-    }
-    return age;
+  UserModel copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? email,
+    DateTime? birthDate,
+    List<AddressModel>? addresses,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      birthDate: birthDate ?? this.birthDate,
+      addresses: addresses ?? this.addresses,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
   }
 }

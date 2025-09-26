@@ -28,10 +28,14 @@ class SignUpRepositoryImpl implements SignUpRepository {
         );
 
         if (response.user == null) {
-          throw DomainException(message: 'User creation failed');
+          throw DomainException(
+            message: 'Falló el registro del usuario, intentalo de nuevo',
+          );
         }
 
-        await _userCollectionRepository.addToUserCollection(signUpModel);
+        await _userCollectionRepository.addToUserCollection(
+          signUpModel.copyWith(id: response.user!.uid),
+        );
 
         return signUpModel;
       },

@@ -8,6 +8,7 @@ extension FirebaseAuthExceptionExtension on FirebaseAuthException {
       case 'user-disabled':
       case 'user-not-found':
       case 'wrong-password':
+      case 'invalid-credential':
         return 'Credenciales incorrectas. Por favor intenta nuevamente o restablece tu contraseña.';
       case 'email-already-in-use':
         return 'Este correo electrónico ya está en uso. Por favor usa un correo diferente o inicia sesión.';

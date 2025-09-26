@@ -40,6 +40,4 @@ sealed class SignUpState with _$SignUpState {
     birthDateInput: FormControl<DateTime>(validators: [Validators.required]),
     addressInput: FormControl<List<AddressModel>>(),
   });
-
-  bool get isValidForm => formGroup.valid;
 }

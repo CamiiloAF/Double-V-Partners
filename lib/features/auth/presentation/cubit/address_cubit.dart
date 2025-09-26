@@ -43,7 +43,6 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  // Agregar nueva dirección vacía
   void addNewAddress() {
     final newAddress = AddressFormData(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -53,14 +52,12 @@ class AddressCubit extends Cubit<AddressState> {
     emit(state.copyWith(addresses: updatedAddresses));
   }
 
-  // Eliminar dirección por índice
   void removeAddress(int index) {
     if (state.addresses.length <= 1) return;
 
     final updatedAddresses = List<AddressFormData>.from(state.addresses);
     updatedAddresses.removeAt(index);
 
-    // Si eliminamos la dirección por defecto, hacer la primera como default
     if (updatedAddresses.isNotEmpty &&
         !updatedAddresses.any((addr) => addr.isDefault)) {
       updatedAddresses[0] = updatedAddresses[0].copyWith(isDefault: true);
@@ -85,14 +82,12 @@ class AddressCubit extends Cubit<AddressState> {
     final updatedAddresses = List<AddressFormData>.from(state.addresses);
     var address = updatedAddresses[index];
 
-    // Reset municipality when department changes
     address = address.copyWith(
       department: department,
       municipality: null,
       availableMunicipalities: [],
     );
 
-    // Update available municipalities
     final locationData = state.locationData;
     if (locationData != null) {
       final municipalities = _locationService.getMunicipalitiesForDepartment(
@@ -158,18 +153,15 @@ class AddressCubit extends Cubit<AddressState> {
     emit(state.copyWith(addresses: updatedAddresses));
   }
 
-  // Validar todas las direcciones
   String? validateAddresses() {
     if (state.addresses.isEmpty) {
       return 'Debes agregar al menos una dirección';
     }
 
-    // Verificar que al menos una dirección esté marcada como por defecto
     if (!state.addresses.any((addr) => addr.isDefault)) {
       return 'Debes marcar al menos una dirección como principal';
     }
 
-    // Validar cada dirección
     for (int i = 0; i < state.addresses.length; i++) {
       final address = state.addresses[i];
       final validation = _validateSingleAddress(address, i + 1);
@@ -192,33 +184,10 @@ class AddressCubit extends Cubit<AddressState> {
     if (address.streetAddress.isEmpty) {
       return 'La dirección es requerida en la dirección $position';
     }
-    if (address.streetAddress.length < 5) {
-      return 'La dirección debe tener al menos 5 caracteres en la dirección $position';
-    }
+
     return null;
   }
 
-  // Convertir a modelos de dominio
-  List<AddressModel> getAddressModels() {
-    return state.addresses
-        .map(
-          (formData) => AddressModel(
-            id: formData.id,
-            country: formData.country,
-            department: formData.department,
-            municipality: formData.municipality!,
-            streetAddress: formData.streetAddress,
-            complement: formData.complement.isNotEmpty
-                ? formData.complement
-                : null,
-            isDefault: formData.isDefault,
-            createdAt: DateTime.now(),
-          ),
-        )
-        .toList();
-  }
-
-  // Cargar direcciones existentes (para modo edición)
   void loadExistingAddresses(List<AddressModel> addresses) {
     final locationData = state.locationData;
     final formDataList = addresses
@@ -244,7 +213,6 @@ class AddressCubit extends Cubit<AddressState> {
     emit(state.copyWith(addresses: formDataList));
   }
 
-  // Resetear formulario
   void resetForm() {
     emit(
       state.copyWith(

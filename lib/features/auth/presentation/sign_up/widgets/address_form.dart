@@ -1,3 +1,4 @@
+import 'package:double_v_partners_tech/core/domain/result_state.dart';
 import 'package:double_v_partners_tech/shared/widgets/forms/custom_form.dart';
 import 'package:double_v_partners_tech/shared/widgets/inputs/drop_down_filter.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +24,10 @@ class AddressForm extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         final cubit = context.read<AddressCubit>();
-        // Si hay direcciones iniciales, cargarlas
+
         if (initialAddresses.isNotEmpty) {
           cubit.loadExistingAddresses(initialAddresses.cast());
         } else {
-          // Si no hay direcciones, crear una vacía
           cubit.addNewAddress();
         }
         return cubit;
@@ -47,34 +47,23 @@ class _AddressFormView extends StatefulWidget {
 }
 
 class _AddressFormViewState extends State<_AddressFormView> {
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddressCubit, AddressState>(
       listener: (context, state) {
-        // // Manejar errores del ResultState
-        // state.locationDataResult.whenOrNull(
-        //   error: (error) {
-        //     ScaffoldMessenger.of(context).showSnackBar(
-        //       SnackBar(
-        //         content: Text(
-        //           'Error cargando ubicaciones: ${error.toString()}',
-        //         ),
-        //         backgroundColor: AppColorsTheme.error,
-        //         behavior: SnackBarBehavior.floating,
-        //       ),
-        //     );
-        //   },
-        // );
-        //
-        // // Notificar cambios a la pantalla padre
-        // if (widget.onAddressesChanged != null && state.hasAddresses) {
-        //   final addresses = context.read<AddressCubit>().getAddressModels();
-        //   widget.onAddressesChanged!(addresses);
-        // }
+        if (state.locationDataResult is Error) {
+          final error = (state.locationDataResult as Error).error;
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error cargando ubicaciones: ${error.toString()}'),
+              backgroundColor: AppColorsTheme.error,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
       },
       builder: (context, state) {
-        // Mostrar loading mientras se cargan las ubicaciones
         if (state.isLoadingLocations) {
           return Center(
             child: Padding(
@@ -91,11 +80,9 @@ class _AddressFormViewState extends State<_AddressFormView> {
         return CustomForm(
           formGroup: state.formGroup,
           fields: [
-            // Header con título y contador
             _buildHeader(context, state),
             const SizedBox(height: 24),
 
-            // Lista de direcciones
             ...List.generate(
               state.addresses.length,
               (index) => Padding(
@@ -104,10 +91,8 @@ class _AddressFormViewState extends State<_AddressFormView> {
               ),
             ),
 
-            // Botón para agregar nueva dirección
             _buildAddNewAddressButton(context),
 
-            // Información adicional
             _buildInfoCard(),
           ],
         );
@@ -160,7 +145,6 @@ class _AddressFormViewState extends State<_AddressFormView> {
           : 'Dirección ${index + 1} ${address.isDefault ? '(Por defecto)' : ''}',
       icon: address.isDefault ? Icons.home : Icons.location_on_outlined,
       showRemoveButton: !isFirstAddress,
-      // No permitir eliminar la primera dirección
       onRemove: () => context.read<AddressCubit>().removeAddress(index),
       trailing: address.isComplete
           ? const Icon(Icons.check_circle, color: AppColorsTheme.success)
@@ -169,7 +153,6 @@ class _AddressFormViewState extends State<_AddressFormView> {
               color: AppColorsTheme.subtitle,
             ),
       children: [
-        // País (solo Colombia)
         DropDownFilter<String>(
           formControlName: state.countryInput,
           labelText: 'País *',
@@ -180,7 +163,6 @@ class _AddressFormViewState extends State<_AddressFormView> {
           items: ['Colombia'],
           prefixIcon: const Icon(Icons.public, color: AppColorsTheme.subtitle),
           showSearchBox: false,
-          // itemAsViewData: (String? element) => element!,
         ),
         const SizedBox(height: 20),
 
@@ -197,16 +179,13 @@ class _AddressFormViewState extends State<_AddressFormView> {
             color: AppColorsTheme.subtitle,
           ),
           showSearchBox: true,
-          // itemAsViewData: (String? element) => element!,
         ),
         const SizedBox(height: 20),
         DropDownFilter<String>(
           formControlName: state.municipalityInput,
           labelText: 'Municipio *',
           hintText: 'Selecciona el municipio',
-          // errorText: address.municipality == ''
-          //     ? 'Este campo es requerido'
-          //     : null,
+
           selectedItem: state.addresses[index].municipality,
           items: address.availableMunicipalities,
           onChanged: (value) {
@@ -220,11 +199,9 @@ class _AddressFormViewState extends State<_AddressFormView> {
             color: AppColorsTheme.subtitle,
           ),
           showSearchBox: true,
-          // itemAsViewData: (String? element) => element!,
         ),
         const SizedBox(height: 20),
 
-        // Dirección
         CustomTextField<String>(
           formControlName: state.streetAddressInput,
           labelText: 'Dirección *',
@@ -243,7 +220,6 @@ class _AddressFormViewState extends State<_AddressFormView> {
         ),
         const SizedBox(height: 20),
 
-        // Complemento
         CustomTextField<String>(
           formControlName: state.complementInput,
           labelText: 'Complemento',
@@ -262,7 +238,6 @@ class _AddressFormViewState extends State<_AddressFormView> {
         ),
         const SizedBox(height: 20),
 
-        // Checkbox para marcar como por defecto
         CheckboxListTile(
           title: const Text(
             'Marcar como dirección principal',

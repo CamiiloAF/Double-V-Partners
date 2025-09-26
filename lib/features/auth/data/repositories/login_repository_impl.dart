@@ -22,7 +22,7 @@ class LoginRepositoryImpl implements LoginRepository {
   ) async {
     return executeService(
       function: () async {
-        final response = await firebaseAuth.createUserWithEmailAndPassword(
+        final response = await firebaseAuth.signInWithEmailAndPassword(
           email: userAuth.email,
           password: userAuth.password,
         );
