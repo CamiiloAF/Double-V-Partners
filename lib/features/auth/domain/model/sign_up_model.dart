@@ -1,4 +1,5 @@
 import '../../../../core/domain/user.dart';
+import 'address.dart';
 
 class SignUpModel extends UserModel {
   SignUpModel({
@@ -24,4 +25,27 @@ class SignUpModel extends UserModel {
     addresses: user.addresses,
     password: password,
   );
+
+  SignUpModel copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? password,
+    DateTime? birthDate,
+    List<AddressModel>? addresses,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return SignUpModel(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      birthDate: birthDate ?? this.birthDate,
+      addresses: addresses ?? this.addresses,
+      createdAt: createdAt ?? this.createdAt,
+      password: password ?? this.password,
+    );
+  }
 }

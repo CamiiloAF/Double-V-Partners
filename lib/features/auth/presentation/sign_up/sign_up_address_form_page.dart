@@ -18,7 +18,6 @@ import '../cubit/sign_up/sign_up_cubit.dart';
 class SignUpAddressFormPage extends StatelessWidget {
   const SignUpAddressFormPage({super.key});
 
-
   Future<void> _saveAddresses(BuildContext context, AddressState state) async {
     final error = context.read<AddressCubit>().validateAddresses();
 
@@ -50,13 +49,12 @@ class SignUpAddressFormPage extends StatelessWidget {
           backgroundColor: AppColorsTheme.surface,
           elevation: 0,
         ),
-        body: BlocListener<SignUpCubit, SignUpState>(
+        body: BlocListener<SignUpCubit, ResultState<UserModel>>(
           listener: (context, state) {
-            final result = state.signUpResult;
-            if (result is Error) {
+            if (state is Error) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text((result as Error).error.message),
+                  content: Text((state as Error).error.message),
                   backgroundColor: AppColorsTheme.error,
                   behavior: SnackBarBehavior.floating,
                 ),
@@ -64,9 +62,9 @@ class SignUpAddressFormPage extends StatelessWidget {
               return;
             }
 
-            if (result is Data) {
+            if (state is Data) {
               context.read<CurrentUserCubit>().setCurrentUser(
-                (result as Data<UserModel>).data,
+                (state as Data<UserModel>).data,
               );
               context.goAndClearStack(AppRoutes.profile);
             }
@@ -85,13 +83,13 @@ class SignUpAddressFormPage extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        BlocBuilder<SignUpCubit, SignUpState>(
+                        BlocBuilder<SignUpCubit, ResultState<UserModel>>(
                           builder: (context, signUpState) {
                             return CustomButtonWidget(
                               text:
                                   'Guardar Direcciones (${state.addressCount})',
                               onPressed: () => _saveAddresses(context, state),
-                              isLoading: signUpState.signUpResult is Loading,
+                              isLoading: signUpState is Loading,
                             );
                           },
                         ),

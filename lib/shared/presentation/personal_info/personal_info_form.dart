@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
+import '../../../core/di/injection.dart';
 import '../../../core/domain/user.dart';
 import '../../../features/auth/presentation/sign_up/widgets/section_container.dart';
 import '../../theme/app_colors_theme.dart';
@@ -14,7 +15,7 @@ import 'cubit/personal_info_cubit.dart';
 class PersonalInfoForm extends StatelessWidget {
   const PersonalInfoForm({
     required this.onCompleteForm,
-    this.showPasswordField = true,
+    this.showPasswordField = false,
     this.isLoading = false,
     this.initialUser,
     super.key,
@@ -29,7 +30,8 @@ class PersonalInfoForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        final cubit = context.read<PersonalInfoCubit>();
+        // Crear una nueva instancia del cubit directamente desde GetIt
+        final cubit = getIt<PersonalInfoCubit>();
         cubit.initializeForm(
           showPasswordField: showPasswordField,
           initialUser: initialUser,
@@ -161,9 +163,13 @@ class _PersonalInfoFormViewState extends State<_PersonalInfoFormView> {
                       isLoading: widget.isLoading,
                       onPressed: formGroup.valid
                           ? () {
-                              final user = context
-                                  .read<PersonalInfoCubit>()
-                                  .buildUserModel();
+                              final user = widget.showPasswordField
+                                  ? context
+                                        .read<PersonalInfoCubit>()
+                                        .buildSignUpModel()
+                                  : context
+                                        .read<PersonalInfoCubit>()
+                                        .buildUserModel();
 
                               widget.onCompleteForm(user);
                             }

@@ -82,7 +82,6 @@ class PersonalInformationPage extends StatelessWidget {
                 BlocBuilder<UpdateProfileCubit, ResultState<UserModel>>(
                   builder: (context, state) {
                     return PersonalInfoForm(
-                      showPasswordField: false,
                       initialUser: currentUser,
                       isLoading: state is Loading,
                       onCompleteForm: (value) {

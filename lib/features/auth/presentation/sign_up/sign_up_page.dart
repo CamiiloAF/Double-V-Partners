@@ -1,176 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
+import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
+import '../../../../core/domain/user.dart';
+import '../../../../shared/presentation/personal_info/cubit/personal_info_cubit.dart';
+import '../../../../shared/presentation/personal_info/personal_info_form.dart';
 import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
-import '../../../../shared/widgets/button/custom_button_widget.dart';
-import '../../../../shared/widgets/forms/custom_form.dart';
-import '../../../../shared/widgets/inputs/custom_text_field.dart';
+import '../../domain/model/sign_up_model.dart';
 import '../cubit/sign_up/sign_up_cubit.dart';
-import 'widgets/section_container.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
-  bool _obscurePassword = true;
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColorsTheme.scaffold,
-      appBar: AppBar(
-        title: const Text(
-          'Crear Cuenta',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: AppColorsTheme.headline,
-          ),
-        ),
-        backgroundColor: AppColorsTheme.surface,
-        elevation: 0,
-      ),
-      body: BlocBuilder<SignUpCubit, SignUpState>(
-        builder: (context, state) {
-          if (state.signUpResult is Loading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  AppColorsTheme.primary,
-                ),
-              ),
-            );
-          }
-
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: CustomForm(
-              formGroup: state.formGroup,
-              fields: [
-                const Text(
-                  '¡Bienvenido!',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppColorsTheme.headline,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Completa la información para crear tu cuenta',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppColorsTheme.subtitle,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                _buildPersonalInfoSection(context, state),
-                const SizedBox(height: 40),
-                ReactiveFormConsumer(
-                  builder: (context, formGroup, child) {
-                    return CustomButtonWidget(
-                      text: 'Continuar',
-                      onPressed: formGroup.valid
-                          ? () {
-                              context.pushNamed(AppRoutes.signUpAddress);
-                            }
-                          : null,
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildPersonalInfoSection(BuildContext context, SignUpState state) {
-    return FormSectionContainer(
-      title: 'Información Personal',
-      icon: Icons.person_outline,
-      children: [
-        CustomTextField(
-          formControlName: state.firstNameInput,
-          labelText: 'Nombre *',
-          hintText: 'Ingresa tu nombre',
-          textCapitalization: TextCapitalization.words,
-          prefixIcon: const Icon(
-            Icons.person_outline,
-            color: AppColorsTheme.subtitle,
-          ),
-        ),
-        const SizedBox(height: 20),
-        CustomTextField(
-          formControlName: state.lastNameInput,
-          labelText: 'Apellido *',
-          hintText: 'Ingresa tu apellido',
-          textCapitalization: TextCapitalization.words,
-          prefixIcon: const Icon(
-            Icons.person_outline,
-            color: AppColorsTheme.subtitle,
-          ),
-        ),
-        const SizedBox(height: 20),
-        CustomTextField(
-          formControlName: state.emailInput,
-          labelText: 'Correo Electrónico *',
-          hintText: 'ejemplo@correo.com',
-          keyboardType: TextInputType.emailAddress,
-          prefixIcon: const Icon(
-            Icons.email_outlined,
-            color: AppColorsTheme.subtitle,
-          ),
-        ),
-        const SizedBox(height: 20),
-        CustomTextField(
-          formControlName: state.passwordInput,
-          labelText: 'Contraseña *',
-          hintText: 'Mínimo 6 caracteres',
-          obscureText: _obscurePassword,
-          prefixIcon: const Icon(
-            Icons.lock_outline,
-            color: AppColorsTheme.subtitle,
-          ),
-          suffixIcon: IconButton(
-            onPressed: () =>
-                setState(() => _obscurePassword = !_obscurePassword),
-            icon: Icon(
-              _obscurePassword ? Icons.visibility : Icons.visibility_off,
-              color: AppColorsTheme.subtitle,
+    return BlocProvider(
+      create: (context) => getIt<PersonalInfoCubit>(),
+      child: Scaffold(
+        backgroundColor: AppColorsTheme.scaffold,
+        appBar: AppBar(
+          title: const Text(
+            'Crear Cuenta',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppColorsTheme.headline,
             ),
           ),
+          backgroundColor: AppColorsTheme.surface,
+          elevation: 0,
         ),
-        const SizedBox(height: 20),
-        ReactiveDatePicker<DateTime>(
-          formControlName: state.birthDateInput,
-          firstDate: DateTime(1900),
-          lastDate: DateTime.now(),
-          builder: (context, picker, child) {
-            return CustomTextField(
-              formControlName: state.birthDateInput,
-              labelText: 'Fecha de nacimiento',
-              readOnly: true,
-              onTap: (_) {
-                picker.showPicker();
-              },
-              valueAccessor: DateTimeValueAccessor(
-                dateTimeFormat: DateFormat('dd/MM/yyyy'),
+        body: BlocBuilder<SignUpCubit, ResultState<UserModel>>(
+          builder: (context, state) {
+            if (state is Loading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppColorsTheme.primary,
+                  ),
+                ),
+              );
+            }
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  const Text(
+                    '¡Bienvenido!',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: AppColorsTheme.headline,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Completa la información para crear tu cuenta',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColorsTheme.subtitle,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  PersonalInfoForm(
+                    onCompleteForm: (value) {
+                      context.read<SignUpCubit>().setSignUpModel(
+                        value as SignUpModel,
+                      );
+                      context.pushNamed(AppRoutes.signUpAddress);
+                    },
+                    showPasswordField: true,
+                  ),
+                ],
               ),
             );
           },
         ),
-      ],
+      ),
     );
   }
 }

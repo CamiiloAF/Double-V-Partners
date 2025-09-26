@@ -1,51 +1,38 @@
 import 'package:bloc/bloc.dart';
 import 'package:double_v_partners_tech/features/auth/domain/model/sign_up_model.dart';
 import 'package:double_v_partners_tech/features/auth/domain/use_cases/sign_up_use_case.dart';
-import 'package:double_v_partners_tech/shared/widgets/forms/extensions.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../../../core/domain/result_state.dart';
 import '../../../../../core/domain/user.dart';
 import '../../../domain/model/address.dart';
 
-part 'sign_up_cubit.freezed.dart';
-part 'sign_up_state.dart';
-
 @injectable
-class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._signUpUseCase) : super(SignUpState());
+class SignUpCubit extends Cubit<ResultState<UserModel>> {
+  SignUpCubit(this._signUpUseCase) : super(const Initial());
 
   final SignUpUseCase _signUpUseCase;
 
+  SignUpModel? _signUpModel;
+
+  void setSignUpModel(SignUpModel model) {
+    _signUpModel = model;
+  }
+
   Future<void> submitSignUp(List<AddressModel> addresses) async {
-    final signUpModel = _buildSignUpModel(addresses);
+    emit(const Loading());
 
-    emit(state.copyWith(signUpResult: Loading()));
-
-    final result = await _signUpUseCase(signUpModel);
+    final result = await _signUpUseCase(
+      _signUpModel!.copyWith(addresses: addresses),
+    );
 
     result.fold(
       (error) {
-        emit(state.copyWith(signUpResult: Error(error: error)));
+        emit(Error(error: error));
       },
       (data) {
-        emit(state.copyWith(signUpResult: Data(data: data)));
+        emit(Data(data: data));
       },
-    );
-  }
-
-  SignUpModel _buildSignUpModel(List<AddressModel> addresses) {
-    return SignUpModel(
-      id: '',
-      firstName: state.formGroup.getFieldValue<String>(state.firstNameInput),
-      lastName: state.formGroup.getFieldValue<String>(state.lastNameInput),
-      email: state.formGroup.getFieldValue<String>(state.emailInput),
-      birthDate: state.formGroup.getFieldValue<DateTime>(state.birthDateInput),
-      createdAt: DateTime.now(),
-      password: state.formGroup.getFieldValue<String>(state.passwordInput),
-      addresses: addresses,
     );
   }
 }

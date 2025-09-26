@@ -15,6 +15,6 @@ class SignUpUseCase {
   Future<Either<DomainException, UserModel>> call(
     SignUpModel signUpModel,
   ) async {
-    return await repository.signUpUser(signUpModel);
+    return repository.signUpUser(signUpModel);
   }
 }
