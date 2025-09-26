@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
@@ -133,8 +134,10 @@ class ProfileView extends StatelessWidget {
                           color: AppColorsTheme.subtitle,
                         ),
                         onTap: () {
-                          // TODO: Navegar a la pantalla de actualización de información personal
-                          // context.pushNamed(AppRoutes.updatePersonalInfo);
+                          context.pushNamed(
+                            AppRoutes.profilePersonalInformation,
+                            extra: currentUser,
+                          );
                         },
                       ),
                       const Divider(
@@ -177,8 +180,10 @@ class ProfileView extends StatelessWidget {
                           color: AppColorsTheme.subtitle,
                         ),
                         onTap: () {
-                          // TODO: Navegar a la pantalla de gestión de direcciones
-                          // context.pushNamed(AppRoutes.manageAddresses);
+                          context.pushNamed(
+                            AppRoutes.profileAddress,
+                            extra: currentUser,
+                          );
                         },
                       ),
                     ],

@@ -45,7 +45,7 @@ class _AddressFormViewState extends State<_AddressFormView> {
     return BlocConsumer<AddressCubit, AddressState>(
       listener: (context, state) {
         if (state.locationDataResult is Error) {
-          final error = (state.locationDataResult as Error).error;
+          final error = (state.locationDataResult as Error).error.message;
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

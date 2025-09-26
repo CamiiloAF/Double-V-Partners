@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:double_v_partners_tech/features/auth/data/dto/mapper/sign_up_mapper.dart';
-import 'package:double_v_partners_tech/core/domain/user.dart';
+import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../features/auth/data/dto/mapper/sign_up_mapper.dart';
 import '../../../features/auth/data/dto/user_dto.dart';
+import '../../domain/user.dart';
 import '../../exceptions/domain_exception.dart';
+import '../../http/rest_client_functions.dart';
 import '../domain/user_collection_repository.dart';
 
 @Injectable(as: UserCollectionRepository)
@@ -26,13 +28,19 @@ class UserCollectionRepositoryImpl implements UserCollectionRepository {
   }
 
   @override
-  Future<UserModel> updateUserCollection(UserModel userModel) async {
-    await firestore
-        .collection(_collectionName)
-        .doc(userModel.id)
-        .update(userModel.toJson());
+  Future<Either<DomainException, UserModel>> updateUserCollection(
+    UserModel userModel,
+  ) async {
+    return executeService(
+      function: () async {
+        await firestore
+            .collection(_collectionName)
+            .doc(userModel.id)
+            .update(userModel.toJson());
 
-    return userModel;
+        return userModel;
+      },
+    );
   }
 
   @override

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/domain/user.dart';
@@ -12,24 +11,6 @@ import 'app_routes.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.login,
-  redirect: (context, state) {
-    final user = FirebaseAuth.instance.currentUser;
-    final isLoggedIn = user != null;
-    final isLoggingIn = state.matchedLocation == AppRoutes.login;
-    final isSigningUp =
-        state.matchedLocation == AppRoutes.signUpPersonalInformation ||
-        state.matchedLocation == AppRoutes.signUpAddress;
-
-    if (isLoggedIn && (isLoggingIn || isSigningUp)) {
-      return AppRoutes.profile;
-    }
-
-    if (!isLoggedIn && state.matchedLocation == AppRoutes.profile) {
-      return AppRoutes.login;
-    }
-
-    return null;
-  },
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutes.login,

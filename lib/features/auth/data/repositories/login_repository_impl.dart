@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/domain/user.dart';
 import '../../../../core/exceptions/domain_exception.dart';
 import '../../../../core/firestore/domain/user_collection_repository.dart';
 import '../../../../core/http/rest_client_functions.dart';
-import '../../../../core/domain/user.dart';
 import '../../domain/model/user_auth.dart';
 import '../../domain/repositories/login_repository.dart';
 
@@ -30,7 +30,7 @@ class LoginRepositoryImpl implements LoginRepository {
         final user = response.user;
 
         if (user != null) {
-          return await userCollectionRepository.getUserById(user.uid);
+          return userCollectionRepository.getUserById(user.uid);
         } else {
           throw DomainException(message: 'Error inesperado, usuario nulo');
         }

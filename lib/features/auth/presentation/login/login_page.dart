@@ -6,6 +6,7 @@ import 'package:reactive_forms/reactive_forms.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
 import '../../../../core/domain/user.dart';
+import '../../../../core/presentation/cubit/current_user_cubit.dart';
 import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
 import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
@@ -13,7 +14,6 @@ import '../../../../shared/widgets/button/custom_button_widget.dart';
 import '../../../../shared/widgets/forms/custom_form.dart';
 import '../../../../shared/widgets/inputs/custom_text_field.dart';
 import '../../domain/model/user_auth.dart';
-import '../../../../core/presentation/cubit/current_user_cubit.dart';
 import '../cubit/login_cubit.dart';
 import '../sign_up/widgets/section_container.dart';
 import 'strings.dart';
@@ -64,6 +64,7 @@ class _LoginViewState extends State<LoginView> {
     switch (state) {
       case Data():
         context.read<CurrentUserCubit>().setCurrentUser(state.data);
+        FocusScope.of(context).unfocus();
         context.pushReplacementNamed(AppRoutes.profile);
         break;
       case Error():

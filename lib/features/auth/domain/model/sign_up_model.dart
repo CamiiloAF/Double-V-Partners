@@ -1,4 +1,4 @@
-import 'package:double_v_partners_tech/core/domain/user.dart';
+import '../../../../core/domain/user.dart';
 
 class SignUpModel extends UserModel {
   SignUpModel({
@@ -13,4 +13,15 @@ class SignUpModel extends UserModel {
   });
 
   final String password;
+
+  factory SignUpModel.fromUser(UserModel user, String password) => SignUpModel(
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    birthDate: user.birthDate,
+    createdAt: user.createdAt,
+    addresses: user.addresses,
+    password: password,
+  );
 }

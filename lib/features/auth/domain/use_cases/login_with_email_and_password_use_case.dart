@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/exceptions/domain_exception.dart';
 import '../../../../core/domain/user.dart';
+import '../../../../core/exceptions/domain_exception.dart';
 import '../model/user_auth.dart';
 import '../repositories/login_repository.dart';
 
