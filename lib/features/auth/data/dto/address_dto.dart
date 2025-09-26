@@ -4,7 +4,7 @@ import '../../domain/model/address.dart';
 
 part 'address_dto.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class AddressDto extends AddressModel {
   AddressDto({
     required super.id,

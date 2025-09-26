@@ -7,7 +7,7 @@ class CustomTextField<T> extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.formControlName,
-    required this.label,
+    required this.labelText,
     this.obscureText = false,
     this.keyboardType,
     this.bottomPadding,
@@ -17,11 +17,18 @@ class CustomTextField<T> extends StatelessWidget {
     this.onTap,
     this.valueAccessor,
     this.validationMessages,
+    this.hintText,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.onChanged,
   });
 
   final String formControlName;
   final double? bottomPadding;
-  final String label;
+  final String labelText;
+  final String? hintText;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final bool obscureText;
   final bool readOnly;
   final int? maxLength;
@@ -30,6 +37,7 @@ class CustomTextField<T> extends StatelessWidget {
   final ReactiveFormFieldCallback<T>? onTap;
   final ControlValueAccessor<T, String>? valueAccessor;
   final Map<String, String Function(Object)>? validationMessages;
+  final ReactiveFormFieldCallback<T>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +54,15 @@ class CustomTextField<T> extends StatelessWidget {
         validationMessages: validationMessages,
         onTap: onTap,
         maxLength: maxLength,
+        onChanged: onChanged,
         valueAccessor: valueAccessor,
         decoration: InputDecoration(
-          label: Text(label),
+          label: Text(labelText),
+          hint: hintText != null ? Text(hintText!) : null,
           counter: Offstage(),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
           ),

@@ -18,5 +18,5 @@ Future<void> configureDependencies() async {
 
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
-  await getIt.init();
+  getIt.init();
 }

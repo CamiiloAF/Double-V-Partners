@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/domain/result_state.dart';
-import '../../domain/model/user.dart';
+import '../../../../core/domain/user.dart';
 import '../../domain/model/user_auth.dart';
 import '../../domain/use_cases/login_with_email_and_password_use_case.dart';
 

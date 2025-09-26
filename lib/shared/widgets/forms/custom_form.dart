@@ -6,12 +6,10 @@ class CustomForm extends StatefulWidget {
     super.key,
     required this.formGroup,
     required this.fields,
-    this.padding,
   });
 
   final FormGroup formGroup;
   final List<Widget> fields;
-  final double? padding;
 
   @override
   State<CustomForm> createState() => _CustomFormState();
@@ -22,12 +20,9 @@ class _CustomFormState extends State<CustomForm> {
   Widget build(BuildContext context) {
     return ReactiveForm(
       formGroup: widget.formGroup,
-      child: Padding(
-        padding: EdgeInsets.all(widget.padding ?? 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.fields,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: widget.fields,
       ),
     );
   }

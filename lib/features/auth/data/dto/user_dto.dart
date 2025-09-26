@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/model/user.dart';
+import '../../../../core/domain/user.dart';
 import 'address_dto.dart';
 
 part 'user_dto.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserDto {
   UserDto({
     required this.id,

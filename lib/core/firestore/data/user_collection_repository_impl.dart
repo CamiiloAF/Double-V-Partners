@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:double_v_partners_tech/features/auth/data/dto/mapper/sign_up_mapper.dart';
-import 'package:double_v_partners_tech/features/auth/domain/model/user.dart';
+import 'package:double_v_partners_tech/core/domain/user.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../features/auth/data/dto/user_dto.dart';

@@ -1,5 +1,7 @@
 abstract class AppRoutes {
   static const String login = '/login';
-  static const String signUp = '/sign-up';
+  static const String signUpPersonalInformation =
+      '/sign-up/personal-information';
+  static const String signUpAddress = '/sign-up/address';
   static const String profile = '/profile';
 }

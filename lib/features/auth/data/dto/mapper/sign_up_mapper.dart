@@ -1,6 +1,6 @@
 import 'package:double_v_partners_tech/features/auth/data/dto/address_dto.dart';
 import 'package:double_v_partners_tech/features/auth/data/dto/user_dto.dart';
-import 'package:double_v_partners_tech/features/auth/domain/model/user.dart';
+import 'package:double_v_partners_tech/core/domain/user.dart';
 
 import '../../../domain/model/address.dart';
 

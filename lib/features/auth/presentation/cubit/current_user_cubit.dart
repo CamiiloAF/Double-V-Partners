@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/model/user.dart';
+import '../../../../core/domain/user.dart';
 
 @injectable
 class CurrentUserCubit extends Cubit<UserModel?> {

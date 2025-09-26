@@ -1,4 +1,4 @@
-import 'address.dart';
+import '../../features/auth/domain/model/address.dart';
 
 class UserModel {
   const UserModel({

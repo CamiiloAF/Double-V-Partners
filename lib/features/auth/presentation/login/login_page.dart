@@ -3,17 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-import '../../../core/di/injection.dart';
-import '../../../core/domain/result_state.dart';
-import '../../../shared/router/app_routes.dart';
-import '../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
-import '../../../shared/widgets/button/custom_button_widget.dart';
-import '../../../shared/widgets/forms/custom_form.dart';
-import '../../../shared/widgets/inputs/custom_text_field.dart';
-import '../domain/model/user.dart';
-import '../domain/model/user_auth.dart';
-import 'cubit/current_user_cubit.dart';
-import 'cubit/login_cubit.dart';
+import '../../../../core/di/injection.dart';
+import '../../../../core/domain/result_state.dart';
+import '../../../../shared/router/app_routes.dart';
+import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
+import '../../../../shared/widgets/button/custom_button_widget.dart';
+import '../../../../shared/widgets/forms/custom_form.dart';
+import '../../../../shared/widgets/inputs/custom_text_field.dart';
+import '../../../../core/domain/user.dart';
+import '../../domain/model/user_auth.dart';
+import '../cubit/current_user_cubit.dart';
+import '../cubit/login_cubit.dart';
 import 'strings.dart';
 
 class LoginPage extends StatelessWidget {
@@ -100,12 +100,12 @@ class _LoginViewState extends State<LoginView> {
                     fields: [
                       CustomTextField(
                         formControlName: _emailInput,
-                        label: LoginStrings.email,
+                        labelText: LoginStrings.email,
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
                         formControlName: _passwordInput,
-                        label: LoginStrings.password,
+                        labelText: LoginStrings.password,
                         obscureText: true,
                       ),
                       const SizedBox(height: 10),

@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/exceptions/domain_exception.dart';
 import '../../../../core/firestore/domain/user_collection_repository.dart';
 import '../../../../core/http/rest_client_functions.dart';
-import '../../domain/model/user.dart';
+import '../../../../core/domain/user.dart';
 import '../../domain/model/user_auth.dart';
 import '../../domain/repositories/login_repository.dart';
 
