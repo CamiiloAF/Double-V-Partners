@@ -66,7 +66,7 @@ class _DropDownFilterState<ModelDataType>
         autoValidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           if (widget.required && value == null) {
-            return "Selección requerida";
+            return 'Selección requerida';
           } else {
             return null;
           }
@@ -76,7 +76,7 @@ class _DropDownFilterState<ModelDataType>
           showSearchBox: widget.showSearchBox,
           searchDelay: Duration.zero,
           showSelectedItems: true,
-          searchFieldProps: TextFieldProps(
+          searchFieldProps: const TextFieldProps(
             decoration: InputDecoration(
               hintText: 'Buscar...',
               border: UnderlineInputBorder(),

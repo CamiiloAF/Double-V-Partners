@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:double_v_partners_tech/core/extensions/firebase_auth_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import '../exceptions/domain_exception.dart';
+import '../extensions/firebase_auth_exception.dart';
 import 'api_result.dart';
 
 const _genericErrorMessage =
@@ -46,9 +46,9 @@ Future<Either<DomainException, Model>> executeService<Model>({
   final result = await handlerExceptionHttp<Model>(function: function);
 
   switch (result) {
-    case Success<Model> success:
+    case final Success<Model> success:
       return Right(success.data);
-    case Failure<Model> failure:
+    case final Failure<Model> failure:
       return Left(failure.dataException);
     default:
       return Left(DomainException(message: 'Unexpected result type: $result'));

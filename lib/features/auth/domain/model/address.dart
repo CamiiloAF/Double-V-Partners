@@ -5,9 +5,9 @@ class AddressModel {
     required this.department,
     required this.municipality,
     required this.streetAddress,
+    required this.createdAt,
     this.complement,
     this.isDefault = false,
-    required this.createdAt,
   });
 
   final String id;
@@ -18,13 +18,4 @@ class AddressModel {
   final String? complement;
   final bool isDefault;
   final DateTime createdAt;
-
-  String get fullAddress {
-    final parts = [streetAddress];
-    if (complement?.isNotEmpty == true) {
-      parts.add(complement!);
-    }
-    parts.addAll([municipality, department, country]);
-    return parts.join(', ');
-  }
 }

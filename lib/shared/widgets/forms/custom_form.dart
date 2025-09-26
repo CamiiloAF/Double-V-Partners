@@ -3,9 +3,7 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class CustomForm extends StatefulWidget {
   const CustomForm({
-    super.key,
-    required this.formGroup,
-    required this.fields,
+    required this.formGroup, required this.fields, super.key,
   });
 
   final FormGroup formGroup;

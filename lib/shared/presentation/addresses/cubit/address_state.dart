@@ -2,13 +2,14 @@ part of 'address_cubit.dart';
 
 @freezed
 sealed class AddressState with _$AddressState {
-  AddressState._();
 
   factory AddressState({
     @Default(Initial()) ResultState<LocationData> locationDataResult,
     @Default(<String>[]) List<String> availableDepartments,
     @Default(<AddressFormData>[]) List<AddressFormData> addresses,
   }) = _AddressState;
+
+  AddressState._();
 
   // Form inputs - ahora con índice dinámico
   String countryInputFor(int index) => 'country_$index';
@@ -30,7 +31,7 @@ sealed class AddressState with _$AddressState {
   FormGroup _buildDynamicFormGroup() {
     final controls = <String, AbstractControl<dynamic>>{};
 
-    for (int i = 0; i < addresses.length; i++) {
+    for (var i = 0; i < addresses.length; i++) {
       final address = addresses[i];
 
       controls[countryInputFor(i)] = FormControl<String>(

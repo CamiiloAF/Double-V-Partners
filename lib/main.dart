@@ -1,10 +1,10 @@
-import 'package:double_v_partners_tech/core/di/injection.dart';
-import 'package:double_v_partners_tech/core/presentation/cubit/current_user_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
+import 'core/di/injection.dart';
+import 'core/presentation/cubit/current_user_cubit.dart';
 import 'features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
 import 'firebase_options.dart';
 import 'shared/router/app_router.dart';

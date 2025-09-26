@@ -1,7 +1,7 @@
 import 'package:reactive_forms/reactive_forms.dart';
 
 extension FormGroupExtensions on FormGroup {
-  void setFieldValue(String fieldName, dynamic value) {
+  void setFieldValue(String fieldName, Object? value) {
     control(fieldName).value = value;
   }
 

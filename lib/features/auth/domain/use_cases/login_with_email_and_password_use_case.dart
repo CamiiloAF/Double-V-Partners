@@ -15,6 +15,6 @@ class LoginWithEmailAndPasswordUseCase {
   Future<Either<DomainException, UserModel>> call(
     UserAuthModel userAuth,
   ) async {
-    return await repository.loginWithEmailAndPassword(userAuth);
+    return repository.loginWithEmailAndPassword(userAuth);
   }
 }

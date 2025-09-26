@@ -13,8 +13,8 @@ class UserDto {
     required this.lastName,
     required this.email,
     required this.birthDate,
-    this.addresses = const [],
     required this.createdAt,
+    this.addresses = const [],
     this.updatedAt,
   });
 
@@ -39,7 +39,7 @@ class UserDto {
       lastName: lastName,
       email: email,
       birthDate: birthDate,
-      addresses: addresses.map((address) => (address).toModel()).toList(),
+      addresses: addresses.map((address) => address.toModel()).toList(),
       createdAt: createdAt,
       updatedAt: updatedAt,
     );

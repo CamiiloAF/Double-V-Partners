@@ -66,7 +66,7 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
             ),
             shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
+                borderRadius: BorderRadius.circular(18),
                 side: widget.noBorder
                     ? const BorderSide(color: Colors.transparent)
                     : widget.outline

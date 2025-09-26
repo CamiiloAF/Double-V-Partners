@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 class DeleteConfirmationDialog extends StatelessWidget {
   const DeleteConfirmationDialog({
-    super.key,
-    required this.title,
-    required this.content,
-    required this.onPressed,
+    required this.title, required this.content, required this.onPressed, super.key,
   });
 
   final String title;
@@ -22,13 +19,13 @@ class DeleteConfirmationDialog extends StatelessWidget {
           const SizedBox(width: 10),
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
       ),
       content:  Text(
         content,
-        style: TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16),
       ),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       actions: [

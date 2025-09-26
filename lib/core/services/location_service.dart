@@ -41,7 +41,7 @@ class LocationService {
     if (_cachedData != null) return _cachedData!;
 
     try {
-      final String jsonString = await rootBundle.loadString(
+      final jsonString = await rootBundle.loadString(
         'assets/data/colombia_locations.json',
       );
       final Map<String, dynamic> jsonData = json.decode(jsonString);

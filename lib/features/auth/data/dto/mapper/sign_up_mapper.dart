@@ -1,8 +1,7 @@
-import 'package:double_v_partners_tech/features/auth/data/dto/address_dto.dart';
-import 'package:double_v_partners_tech/features/auth/data/dto/user_dto.dart';
-import 'package:double_v_partners_tech/core/domain/user.dart';
-
+import '../../../../../core/domain/user.dart';
 import '../../../domain/model/address.dart';
+import '../address_dto.dart';
+import '../user_dto.dart';
 
 extension SignUpMapper on UserModel {
   Map<String, dynamic> toJson() => UserDto(

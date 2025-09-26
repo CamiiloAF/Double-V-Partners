@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/exceptions/domain_exception.dart';
 import '../../../../core/domain/user.dart';
+import '../../../../core/exceptions/domain_exception.dart';
 import '../model/user_auth.dart';
 
 abstract class LoginRepository {

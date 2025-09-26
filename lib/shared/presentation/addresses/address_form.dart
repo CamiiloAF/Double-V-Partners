@@ -244,7 +244,10 @@ class _AddressFormViewState extends State<_AddressFormView> {
           value: address.isDefault,
           onChanged: (value) {
             if (value != null) {
-              context.read<AddressCubit>().onChangeDefaultAddress(index, value);
+              context.read<AddressCubit>().onChangeDefaultAddress(
+                index,
+                value: value,
+              );
             }
           },
           activeColor: AppColorsTheme.primary,

@@ -12,9 +12,9 @@ class AddressDto extends AddressModel {
     required super.department,
     required super.municipality,
     required super.streetAddress,
+    required super.createdAt,
     super.complement,
     super.isDefault = false,
-    required super.createdAt,
   });
 
   factory AddressDto.fromJson(Map<String, dynamic> json) =>

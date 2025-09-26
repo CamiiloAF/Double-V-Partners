@@ -7,8 +7,8 @@ class UserModel {
     required this.lastName,
     required this.email,
     required this.birthDate,
-    this.addresses = const [],
     required this.createdAt,
+    this.addresses = const [],
     this.updatedAt,
   });
 

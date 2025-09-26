@@ -5,9 +5,9 @@ import '../../theme/theme.dart';
 
 class CustomTextField<T> extends StatelessWidget {
   const CustomTextField({
-    super.key,
     required this.formControlName,
     required this.labelText,
+    super.key,
     this.obscureText = false,
     this.keyboardType,
     this.bottomPadding,
@@ -62,7 +62,7 @@ class CustomTextField<T> extends StatelessWidget {
         decoration: InputDecoration(
           label: Text(labelText),
           hint: hintText != null ? Text(hintText!) : null,
-          counter: Offstage(),
+          counter: const Offstage(),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,

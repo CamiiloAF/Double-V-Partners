@@ -112,7 +112,7 @@ class AddressCubit extends Cubit<AddressState> {
     emit(state.copyWith(addresses: updatedAddresses));
   }
 
-  void onChangeDefaultAddress(int index, bool value) {
+  void onChangeDefaultAddress(int index, {required bool value}) {
     if (index >= state.addresses.length) return;
 
     final updatedAddresses = List<AddressFormData>.from(state.addresses);

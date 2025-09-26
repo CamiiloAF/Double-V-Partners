@@ -18,7 +18,7 @@ class GetUserByIdUseCase {
     } catch (error) {
       return Left(
         DomainException(
-          message: 'Error al obtener el usuario: ${error.toString()}',
+          message: 'Error al obtener el usuario: ${error}',
         ),
       );
     }
