@@ -7,11 +7,19 @@ import '../../features/auth/presentation/sign_up/sign_up_page.dart';
 import '../../features/profile/presentation/address_page.dart';
 import '../../features/profile/presentation/personal_information_page.dart';
 import '../../features/profile/presentation/profile_page.dart';
+import '../../features/splash/presentation/splash_screen.dart';
 import 'app_routes.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.login,
+  initialLocation: AppRoutes.splash,
   routes: <RouteBase>[
+    GoRoute(
+      path: AppRoutes.splash,
+      name: AppRoutes.splash,
+      builder: (context, state) {
+        return const SplashScreen();
+      },
+    ),
     GoRoute(
       path: AppRoutes.login,
       name: AppRoutes.login,
