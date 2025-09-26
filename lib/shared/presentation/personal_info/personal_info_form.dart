@@ -134,9 +134,7 @@ class _PersonalInfoFormViewState extends State<_PersonalInfoFormView> {
                 ReactiveDatePicker<DateTime>(
                   formControlName: state.birthDateInput,
                   firstDate: DateTime(1900),
-                  lastDate: DateTime.now().subtract(
-                    const Duration(days: 365 * 18),
-                  ),
+                  lastDate: DateTime.now(),
                   builder: (context, picker, child) {
                     return CustomTextField(
                       formControlName: state.birthDateInput,

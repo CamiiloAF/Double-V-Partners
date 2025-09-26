@@ -12,6 +12,7 @@ class CustomButtonWidget extends StatefulWidget {
   final Color? color;
   final EdgeInsets? padding;
   final bool isLoading;
+  final double? width;
 
   const CustomButtonWidget({
     required this.onPressed,
@@ -25,6 +26,7 @@ class CustomButtonWidget extends StatefulWidget {
     this.noBorder = false,
     this.shrinkWrap = false,
     this.isLoading = false,
+    this.width,
     super.key,
   }) : assert(
          !noBorder || !outline,
@@ -46,9 +48,9 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
       materialTapTargetSize: widget.shrinkWrap
           ? MaterialTapTargetSize.shrinkWrap
           : null,
-      height: widget.shrinkWrap ? 0 : 36,
       child: SizedBox(
-        width: size.width,
+        height: widget.shrinkWrap ? 0 : 48,
+        width: widget.width ?? size.width,
         child: TextButton(
           onPressed: widget.enabled ? widget.onPressed : null,
           style: ButtonStyle(
@@ -56,10 +58,10 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
               widget.outline
                   ? Colors.transparent
                   : (widget.noBorder ||
-                          widget.onPressed == null ||
-                          !widget.enabled)
-                      ? Colors.grey
-                      : widget.color ?? primaryColor,
+                        widget.onPressed == null ||
+                        !widget.enabled)
+                  ? Colors.grey
+                  : widget.color ?? primaryColor,
             ),
             padding: WidgetStateProperty.all<EdgeInsetsGeometry?>(
               widget.padding,

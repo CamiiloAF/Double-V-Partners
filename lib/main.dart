@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         ValidationMessage.email: (_) => 'Email inválido',
         ValidationMessage.minLength: (error) =>
             'Debe tener al menos ${(error as Map)['requiredLength']} caracteres',
+        'adultAge': (error) => 'Debes ser mayor de edad',
       },
       child: MultiBlocProvider(
         providers: [

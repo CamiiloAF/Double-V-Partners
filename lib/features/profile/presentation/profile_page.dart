@@ -8,6 +8,7 @@ import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
 import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
 import '../../../../shared/widgets/button/custom_button_widget.dart';
+import '../../../../shared/widgets/dialogs/confirmation_dialog.dart';
 import '../../../core/extensions/go_router.dart';
 import '../../../core/presentation/cubit/current_user_cubit.dart';
 import 'cubit/profile_cubit.dart';
@@ -192,8 +193,21 @@ class ProfileView extends StatelessWidget {
                 const Spacer(),
                 CustomButtonWidget(
                   text: 'Cerrar Sesión',
-                  onPressed: () => context.read<ProfileCubit>().logout(),
-                  isLoading: state is Loading,
+                  onPressed: state is Loading
+                      ? null
+                      : () {
+                          showConfirmationDialog(
+                            context: context,
+                            title: 'Cerrar sesión',
+                            message:
+                                '¿Estás seguro de que deseas cerrar sesión?',
+                            confirmText: 'Cerrar sesión',
+                            cancelText: 'Cancelar',
+                            isDestructive: true,
+                            onConfirm: () =>
+                                context.read<ProfileCubit>().logout(),
+                          );
+                        },
                 ),
               ],
             ),
