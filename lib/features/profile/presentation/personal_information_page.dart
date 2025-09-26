@@ -8,6 +8,7 @@ import '../../../core/presentation/cubit/current_user_cubit.dart';
 import '../../../shared/presentation/personal_info/cubit/personal_info_cubit.dart';
 import '../../../shared/presentation/personal_info/personal_info_form.dart';
 import '../../../shared/theme/app_colors_theme.dart';
+import '../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
 import 'cubit/update_profile_cubit.dart';
 
 class PersonalInformationPage extends StatelessWidget {
@@ -27,11 +28,7 @@ class PersonalInformationPage extends StatelessWidget {
           if (state is Data) {
             final data = (state as Data<UserModel>).data;
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Información actualizada correctamente'),
-              ),
-            );
+            showSuccessUpdateSnackBar(context);
 
             context.read<CurrentUserCubit>().setCurrentUser(data);
             return;

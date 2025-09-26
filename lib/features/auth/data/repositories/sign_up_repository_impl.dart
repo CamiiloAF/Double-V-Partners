@@ -20,7 +20,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   Future<Either<DomainException, UserModel>> signUpUser(
     SignUpModel signUpModel,
   ) async {
-    return await executeService(
+    return executeService(
       function: () async {
         final response = await _firebaseAuth.createUserWithEmailAndPassword(
           email: signUpModel.email,
@@ -33,11 +33,11 @@ class SignUpRepositoryImpl implements SignUpRepository {
           );
         }
 
-        await _userCollectionRepository.addToUserCollection(
-          signUpModel.copyWith(id: response.user!.uid),
-        );
+        final userWithId = signUpModel.copyWith(id: response.user!.uid);
 
-        return signUpModel;
+        await _userCollectionRepository.addToUserCollection(userWithId);
+
+        return userWithId;
       },
     );
   }

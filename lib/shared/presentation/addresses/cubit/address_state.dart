@@ -10,28 +10,55 @@ sealed class AddressState with _$AddressState {
     @Default(<AddressFormData>[]) List<AddressFormData> addresses,
   }) = _AddressState;
 
-  // Form inputs
-  String get countryInput => 'country';
+  // Form inputs - ahora con índice dinámico
+  String countryInputFor(int index) => 'country_$index';
 
-  String get departmentInput => 'department';
+  String departmentInputFor(int index) => 'department_$index';
 
-  String get municipalityInput => 'municipality';
+  String municipalityInputFor(int index) => 'municipality_$index';
 
-  String get streetAddressInput => 'streetAddress';
+  String streetAddressInputFor(int index) => 'streetAddress_$index';
 
-  String get complementInput => 'complement';
+  String complementInputFor(int index) => 'complement_$index';
 
-  String get isDefaultInput => 'isDefault';
+  String isDefaultInputFor(int index) => 'isDefault_$index';
 
+  // FormGroup dinámico basado en las direcciones actuales
   @override
-  late final FormGroup formGroup = FormGroup({
-    countryInput: FormControl<String>(validators: [Validators.required]),
-    departmentInput: FormControl<String>(validators: [Validators.required]),
-    municipalityInput: FormControl<String>(validators: [Validators.required]),
-    streetAddressInput: FormControl<String>(validators: [Validators.required]),
-    complementInput: FormControl<String>(),
-    isDefaultInput: FormControl<bool>(value: false),
-  });
+  late final FormGroup formGroup = _buildDynamicFormGroup();
+
+  FormGroup _buildDynamicFormGroup() {
+    final controls = <String, AbstractControl<dynamic>>{};
+
+    for (int i = 0; i < addresses.length; i++) {
+      final address = addresses[i];
+
+      controls[countryInputFor(i)] = FormControl<String>(
+        value: address.country,
+        validators: [Validators.required],
+      );
+      controls[departmentInputFor(i)] = FormControl<String>(
+        value: address.department,
+        validators: [Validators.required],
+      );
+      controls[municipalityInputFor(i)] = FormControl<String>(
+        value: address.municipality,
+        validators: [Validators.required],
+      );
+      controls[streetAddressInputFor(i)] = FormControl<String>(
+        value: address.streetAddress,
+        validators: [Validators.required],
+      );
+      controls[complementInputFor(i)] = FormControl<String>(
+        value: address.complement,
+      );
+      controls[isDefaultInputFor(i)] = FormControl<bool>(
+        value: address.isDefault,
+      );
+    }
+
+    return FormGroup(controls);
+  }
 
   int get addressCount => addresses.length;
 
@@ -47,7 +74,7 @@ sealed class AddressFormData with _$AddressFormData {
   const factory AddressFormData({
     required String id,
     @Default('Colombia') String country,
-    @Default('') String department,
+    @Default(null) String? department,
     @Default(null) String? municipality,
     @Default('') String streetAddress,
     @Default('') String complement,
@@ -59,7 +86,7 @@ sealed class AddressFormData with _$AddressFormData {
 
   bool get isComplete {
     return country.isNotEmpty &&
-        department.isNotEmpty &&
+        (department?.isNotEmpty ?? false) &&
         (municipality?.isNotEmpty ?? false) &&
         streetAddress.isNotEmpty;
   }
@@ -72,7 +99,7 @@ sealed class AddressFormData with _$AddressFormData {
     if (municipality != null && municipality!.isNotEmpty) {
       parts.add(municipality!);
     }
-    if (department.isNotEmpty) parts.add(department);
+    if (department?.isNotEmpty ?? false) parts.add(department!);
 
     return parts.join(', ');
   }
@@ -80,7 +107,7 @@ sealed class AddressFormData with _$AddressFormData {
   AddressModel toAddressModel() => AddressModel(
     id: id,
     country: country,
-    department: department,
+    department: department!,
     municipality: municipality!,
     streetAddress: streetAddress,
     complement: complement,

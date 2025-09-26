@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/domain/user.dart';
 import '../../features/auth/presentation/login/login_page.dart';
-import '../../features/auth/presentation/sign_up/address_form_page.dart';
+import '../../features/auth/presentation/sign_up/sign_up_address_form_page.dart';
 import '../../features/auth/presentation/sign_up/sign_up_page.dart';
 import '../../features/profile/presentation/address_page.dart';
 import '../../features/profile/presentation/personal_information_page.dart';

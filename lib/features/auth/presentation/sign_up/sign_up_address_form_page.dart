@@ -5,43 +5,25 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/domain/result_state.dart';
 import '../../../../core/domain/user.dart';
 import '../../../../core/extensions/go_router.dart';
+import '../../../../core/presentation/cubit/current_user_cubit.dart';
+import '../../../../shared/presentation/addresses/address_form.dart';
+import '../../../../shared/presentation/addresses/cubit/address_cubit.dart';
 import '../../../../shared/router/app_routes.dart';
 import '../../../../shared/theme/app_colors_theme.dart';
+import '../../../../shared/widgets/alert_dialogs/alert_dialogs.dart';
 import '../../../../shared/widgets/button/custom_button_widget.dart';
 import '../../../../shared/widgets/containers/address_button_container.dart';
-import '../../../../shared/presentation/addresses/cubit/address_cubit.dart';
-import '../../../../core/presentation/cubit/current_user_cubit.dart';
 import '../cubit/sign_up/sign_up_cubit.dart';
-import '../../../../shared/presentation/addresses/address_form.dart';
 
-class SignUpAddressFormPage extends StatefulWidget {
+class SignUpAddressFormPage extends StatelessWidget {
   const SignUpAddressFormPage({super.key});
 
-  @override
-  State<SignUpAddressFormPage> createState() => _SignUpAddressFormPageState();
-}
-
-class _SignUpAddressFormPageState extends State<SignUpAddressFormPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: AppColorsTheme.error,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
 
   Future<void> _saveAddresses(BuildContext context, AddressState state) async {
     final error = context.read<AddressCubit>().validateAddresses();
 
     if (error != null) {
-      _showError(error);
+      showSnackBarError(error, context);
       return;
     }
 

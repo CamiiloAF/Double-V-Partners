@@ -21,6 +21,7 @@ class CustomTextField<T> extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onChanged,
+    this.controller,
   });
 
   final String formControlName;
@@ -38,6 +39,7 @@ class CustomTextField<T> extends StatelessWidget {
   final ControlValueAccessor<T, String>? valueAccessor;
   final Map<String, String Function(Object)>? validationMessages;
   final ReactiveFormFieldCallback<T>? onChanged;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class CustomTextField<T> extends StatelessWidget {
       padding: EdgeInsets.only(top: bottomPadding ?? 0),
       child: ReactiveTextField(
         style: theme.textTheme.bodySmall,
+        controller: controller,
         formControlName: formControlName,
         obscureText: obscureText,
         keyboardType: keyboardType,

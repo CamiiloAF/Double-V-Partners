@@ -175,7 +175,7 @@ class AddressCubit extends Cubit<AddressState> {
     if (address.country.isEmpty) {
       return 'El país es requerido en la dirección $position';
     }
-    if (address.department.isEmpty) {
+    if (address.department?.isEmpty ?? false) {
       return 'El departamento es requerido en la dirección $position';
     }
     if (address.municipality?.isEmpty ?? false) {
@@ -210,6 +210,8 @@ class AddressCubit extends Cubit<AddressState> {
         )
         .toList();
 
+    // Al emitir el nuevo estado, el FormGroup se reconstruirá automáticamente
+    // con los valores correctos gracias a _buildDynamicFormGroup()
     emit(state.copyWith(addresses: formDataList));
   }
 

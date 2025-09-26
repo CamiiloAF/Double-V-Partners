@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/domain/result_state.dart';
+import '../../../features/auth/domain/model/address.dart';
 import '../../../features/auth/presentation/sign_up/widgets/section_container.dart';
 import '../../theme/app_colors_theme.dart';
 import '../../widgets/forms/custom_form.dart';
@@ -12,7 +13,7 @@ import 'cubit/address_cubit.dart';
 class AddressForm extends StatelessWidget {
   const AddressForm({super.key, this.initialAddresses = const []});
 
-  final List<dynamic> initialAddresses;
+  final List<AddressModel> initialAddresses;
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +148,9 @@ class _AddressFormViewState extends State<_AddressFormView> {
             ),
       children: [
         DropDownFilter<String>(
-          formControlName: state.countryInput,
+          formControlName: state.countryInputFor(index),
           labelText: 'País *',
+          selectedItem: address.country,
           hintText: 'Selecciona el país',
           onChanged: (value) {
             context.read<AddressCubit>().onChangeCountry(index, value ?? '');
@@ -160,9 +162,10 @@ class _AddressFormViewState extends State<_AddressFormView> {
         const SizedBox(height: 20),
 
         DropDownFilter<String>(
-          formControlName: state.departmentInput,
+          formControlName: state.departmentInputFor(index),
           labelText: 'Departamento *',
           hintText: 'Selecciona el departamento',
+          selectedItem: address.department,
           items: state.availableDepartments,
           onChanged: (value) {
             context.read<AddressCubit>().onChangeDepartment(index, value ?? '');
@@ -175,11 +178,10 @@ class _AddressFormViewState extends State<_AddressFormView> {
         ),
         const SizedBox(height: 20),
         DropDownFilter<String>(
-          formControlName: state.municipalityInput,
+          formControlName: state.municipalityInputFor(index),
           labelText: 'Municipio *',
           hintText: 'Selecciona el municipio',
-
-          selectedItem: state.addresses[index].municipality,
+          selectedItem: address.municipality,
           items: address.availableMunicipalities,
           onChanged: (value) {
             context.read<AddressCubit>().onChangeMunicipality(
@@ -194,9 +196,8 @@ class _AddressFormViewState extends State<_AddressFormView> {
           showSearchBox: true,
         ),
         const SizedBox(height: 20),
-
         CustomTextField<String>(
-          formControlName: state.streetAddressInput,
+          formControlName: state.streetAddressInputFor(index),
           labelText: 'Dirección *',
           hintText: 'Calle, carrera, número, etc.',
           onChanged: (value) {
@@ -214,7 +215,7 @@ class _AddressFormViewState extends State<_AddressFormView> {
         const SizedBox(height: 20),
 
         CustomTextField<String>(
-          formControlName: state.complementInput,
+          formControlName: state.complementInputFor(index),
           labelText: 'Complemento',
           hintText: 'Apartamento, piso, torre, etc. (opcional)',
           onChanged: (value) {
