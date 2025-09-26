@@ -94,7 +94,6 @@ class _DropDownFilterState<ModelDataType>
             labelText: widget.labelText,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: theme.colorScheme.primary),
             ),
             prefixIcon: widget.prefixIcon,
 

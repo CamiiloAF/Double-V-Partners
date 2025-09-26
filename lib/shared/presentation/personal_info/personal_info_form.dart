@@ -41,6 +41,7 @@ class PersonalInfoForm extends StatelessWidget {
         showPasswordField: showPasswordField,
         onCompleteForm: onCompleteForm,
         isLoading: isLoading,
+        initialUser: initialUser,
       ),
     );
   }
@@ -51,11 +52,13 @@ class _PersonalInfoFormView extends StatefulWidget {
     required this.showPasswordField,
     required this.onCompleteForm,
     required this.isLoading,
+    required this.initialUser,
   });
 
   final bool showPasswordField;
   final ValueChanged<UserModel> onCompleteForm;
   final bool isLoading;
+  final UserModel? initialUser;
 
   @override
   State<_PersonalInfoFormView> createState() => _PersonalInfoFormViewState();
@@ -101,6 +104,7 @@ class _PersonalInfoFormViewState extends State<_PersonalInfoFormView> {
                   formControlName: state.emailInput,
                   labelText: 'Correo Electrónico *',
                   hintText: 'ejemplo@correo.com',
+                  readOnly: widget.initialUser != null,
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: const Icon(
                     Icons.email_outlined,
