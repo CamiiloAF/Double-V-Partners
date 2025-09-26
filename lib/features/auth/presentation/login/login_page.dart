@@ -106,7 +106,6 @@ class _LoginViewState extends State<LoginView> {
               child: CustomForm(
                 formGroup: formGroup,
                 fields: [
-                  // Header de bienvenida con el mismo estilo del sign up
                   const Text(
                     '¡Bienvenido de vuelta!',
                     style: TextStyle(

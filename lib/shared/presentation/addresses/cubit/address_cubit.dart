@@ -19,7 +19,6 @@ class AddressCubit extends Cubit<AddressState> {
 
   final LocationService _locationService;
 
-  // MARK: - Initialization
   Future<void> _loadLocationData() async {
     emit(state.copyWith(locationDataResult: const ResultState.loading()));
 
@@ -27,20 +26,23 @@ class AddressCubit extends Cubit<AddressState> {
       final locationData = await _locationService.loadColombiaData();
       final departments = _locationService.getDepartmentNames(locationData);
 
-      emit(state.copyWith(
-        locationDataResult: ResultState.data(data: locationData),
-        availableDepartments: departments,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        locationDataResult: ResultState.error(
-          error: DomainException(message: 'Error cargando la información.'),
+      emit(
+        state.copyWith(
+          locationDataResult: ResultState.data(data: locationData),
+          availableDepartments: departments,
         ),
-      ));
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          locationDataResult: const ResultState.error(
+            error: DomainException(message: 'Error cargando la información.'),
+          ),
+        ),
+      );
     }
   }
 
-  // MARK: - Address Management
   void addNewAddress() {
     final newAddress = AddressFormData(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -66,23 +68,21 @@ class AddressCubit extends Cubit<AddressState> {
 
   void resetForm() {
     final defaultAddress = AddressFormData(
-      id: DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString(),
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
     );
     emit(state.copyWith(addresses: [defaultAddress]));
   }
 
-  // MARK: - Field Updates
   void onChangeCountry(int index, String country) {
     _updateAddressAtIndex(
-        index, (address) => address.copyWith(country: country));
+      index,
+      (address) => address.copyWith(country: country),
+    );
   }
 
   void onChangeDepartment(int index, String department) {
     _updateAddressAtIndex(index, (address) {
-      var updatedAddress = address.copyWith(
+      final updatedAddress = address.copyWith(
         department: department,
         municipality: null,
         availableMunicipalities: [],
@@ -94,18 +94,24 @@ class AddressCubit extends Cubit<AddressState> {
   }
 
   void onChangeMunicipality(int index, String municipality) {
-    _updateAddressAtIndex(index, (address) =>
-        address.copyWith(municipality: municipality));
+    _updateAddressAtIndex(
+      index,
+      (address) => address.copyWith(municipality: municipality),
+    );
   }
 
   void onChangeStreetAddress(int index, String streetAddress) {
-    _updateAddressAtIndex(index, (address) =>
-        address.copyWith(streetAddress: streetAddress));
+    _updateAddressAtIndex(
+      index,
+      (address) => address.copyWith(streetAddress: streetAddress),
+    );
   }
 
   void onChangeComplement(int index, String complement) {
-    _updateAddressAtIndex(index, (address) =>
-        address.copyWith(complement: complement));
+    _updateAddressAtIndex(
+      index,
+      (address) => address.copyWith(complement: complement),
+    );
   }
 
   void onChangeDefaultAddress(int index, {required bool value}) {
@@ -117,12 +123,12 @@ class AddressCubit extends Cubit<AddressState> {
       _clearAllDefaultFlags(updatedAddresses, exceptIndex: index);
     }
 
-    updatedAddresses[index] =
-        updatedAddresses[index].copyWith(isDefault: value);
+    updatedAddresses[index] = updatedAddresses[index].copyWith(
+      isDefault: value,
+    );
     emit(state.copyWith(addresses: updatedAddresses));
   }
 
-  // MARK: - Validation
   String? validateAddresses() {
     if (state.addresses.isEmpty) {
       return 'Debes agregar al menos una dirección';
@@ -135,9 +141,7 @@ class AddressCubit extends Cubit<AddressState> {
     return _validateAllAddresses();
   }
 
-  // MARK: - Private Helper Methods
-  bool _isValidIndex(int index) =>
-      index >= 0 && index < state.addresses.length;
+  bool _isValidIndex(int index) => index >= 0 && index < state.addresses.length;
 
   bool _canRemoveAddress() => state.addresses.length > 1;
 
@@ -147,8 +151,10 @@ class AddressCubit extends Cubit<AddressState> {
   List<AddressFormData> _copyAddressList() =>
       List<AddressFormData>.from(state.addresses);
 
-  void _updateAddressAtIndex(int index,
-      AddressFormData Function(AddressFormData) updateFunction,) {
+  void _updateAddressAtIndex(
+    int index,
+    AddressFormData Function(AddressFormData) updateFunction,
+  ) {
     if (!_isValidIndex(index)) return;
 
     final updatedAddresses = _copyAddressList();
@@ -162,9 +168,11 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  void _clearAllDefaultFlags(List<AddressFormData> addresses,
-      {required int exceptIndex}) {
-    for (int i = 0; i < addresses.length; i++) {
+  void _clearAllDefaultFlags(
+    List<AddressFormData> addresses, {
+    required int exceptIndex,
+  }) {
+    for (var i = 0; i < addresses.length; i++) {
       if (i != exceptIndex) {
         addresses[i] = addresses[i].copyWith(isDefault: false);
       }
@@ -175,7 +183,9 @@ class AddressCubit extends Cubit<AddressState> {
     final locationData = state.locationData;
     return locationData != null
         ? _locationService.getMunicipalitiesForDepartment(
-        locationData, department)
+            locationData,
+            department,
+          )
         : [];
   }
 
@@ -189,12 +199,13 @@ class AddressCubit extends Cubit<AddressState> {
       complement: address.complement ?? '',
       isDefault: address.isDefault,
       availableMunicipalities: _getMunicipalitiesForDepartment(
-          address.department),
+        address.department,
+      ),
     );
   }
 
   String? _validateAllAddresses() {
-    for (int i = 0; i < state.addresses.length; i++) {
+    for (var i = 0; i < state.addresses.length; i++) {
       final validation = _validateSingleAddress(state.addresses[i], i + 1);
       if (validation != null) return validation;
     }

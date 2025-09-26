@@ -49,7 +49,7 @@ class UserCollectionRepositoryImpl implements UserCollectionRepository {
     if (doc.exists) {
       return UserDto.fromJson(doc.data()!).toDomainModel();
     } else {
-      throw DomainException(
+      throw const DomainException(
         message: 'Usuario no encontrado en la base de datos.',
       );
     }

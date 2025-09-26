@@ -32,7 +32,9 @@ class LoginRepositoryImpl implements LoginRepository {
         if (user != null) {
           return userCollectionRepository.getUserById(user.uid);
         } else {
-          throw DomainException(message: 'Error inesperado, usuario nulo');
+          throw const DomainException(
+            message: 'Error inesperado, usuario nulo',
+          );
         }
       },
     );

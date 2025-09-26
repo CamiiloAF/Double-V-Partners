@@ -35,7 +35,7 @@ Future<ApiResult<T>> handlerExceptionHttp<T>({
       print('Error in Service Exception: $error}');
     }
     return ApiResult.failure(
-      dataException: DomainException(message: _genericErrorMessage),
+      dataException: const DomainException(message: _genericErrorMessage),
     );
   }
 }

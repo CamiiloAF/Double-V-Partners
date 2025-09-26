@@ -11,7 +11,6 @@ sealed class AddressState with _$AddressState {
 
   AddressState._();
 
-  // Form inputs - ahora con índice dinámico
   String countryInputFor(int index) => 'country_$index';
 
   String departmentInputFor(int index) => 'department_$index';

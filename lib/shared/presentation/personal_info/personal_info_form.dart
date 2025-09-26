@@ -30,7 +30,6 @@ class PersonalInfoForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        // Crear una nueva instancia del cubit directamente desde GetIt
         final cubit = getIt<PersonalInfoCubit>();
         cubit.initializeForm(
           showPasswordField: showPasswordField,
@@ -135,7 +134,9 @@ class _PersonalInfoFormViewState extends State<_PersonalInfoFormView> {
                 ReactiveDatePicker<DateTime>(
                   formControlName: state.birthDateInput,
                   firstDate: DateTime(1900),
-                  lastDate: DateTime.now(),
+                  lastDate: DateTime.now().subtract(
+                    const Duration(days: 365 * 18),
+                  ),
                   builder: (context, picker, child) {
                     return CustomTextField(
                       formControlName: state.birthDateInput,

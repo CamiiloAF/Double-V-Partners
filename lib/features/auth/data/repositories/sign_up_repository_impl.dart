@@ -28,7 +28,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         );
 
         if (response.user == null) {
-          throw DomainException(
+          throw const DomainException(
             message: 'Falló el registro del usuario, intentalo de nuevo',
           );
         }

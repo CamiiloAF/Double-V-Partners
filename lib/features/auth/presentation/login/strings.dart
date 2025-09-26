@@ -5,7 +5,6 @@ abstract class LoginStrings {
   static const String password = 'Contraseña';
   static const String loginButton = 'Iniciar sesión';
 
-  // Validation messages
   static const String requiredField = 'Este campo es obligatorio';
   static const String invalidEmail = 'Email inválido';
 

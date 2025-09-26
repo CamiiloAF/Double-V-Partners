@@ -10,7 +10,6 @@ ValidatorFunction mustMatch(String controlName, String matchingControlName) {
     if (formControl.value != matchingFormControl.value) {
       matchingFormControl.setErrors({'mustMatch': true});
 
-      // force messages to show up as soon as possible
       matchingFormControl.markAsTouched();
     } else {
       matchingFormControl.removeError('mustMatch');

@@ -23,7 +23,6 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   void initializeForm({bool showPasswordField = true, UserModel? initialUser}) {
     final newState = PersonalInfoState(showPasswordField: showPasswordField);
 
-    // Si hay datos iniciales, los establecemos
     if (initialUser != null) {
       newState.formGroup.control(newState.firstNameInput).value =
           initialUser.firstName;

@@ -52,3 +52,4 @@ output/
 *.g.dart
 *.gen.dart
 *.lock
+*.mocks.dart
