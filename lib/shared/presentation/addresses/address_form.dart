@@ -217,7 +217,7 @@ class _AddressFormViewState extends State<_AddressFormView> {
         CustomTextField<String>(
           formControlName: state.complementInputFor(index),
           labelText: 'Complemento',
-          hintText: 'Apartamento, piso, torre, etc. (opcional)',
+          hintText: 'Apartamento, piso, etc. (opcional)',
           onChanged: (value) {
             context.read<AddressCubit>().onChangeComplement(
               index,
