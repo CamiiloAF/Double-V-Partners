@@ -107,6 +107,33 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
+  Widget _buildAppLogo() {
+    try {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.asset(
+          'assets/images/app_logo.png',
+          width: 80,
+          height: 80,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(
+              Icons.location_on,
+              size: 60,
+              color: AppColorsTheme.primary,
+            );
+          },
+        ),
+      );
+    } catch (e) {
+      return const Icon(
+        Icons.location_on,
+        size: 60,
+        color: AppColorsTheme.primary,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,11 +164,7 @@ class _SplashScreenState extends State<SplashScreen>
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          Icons.location_on,
-                          size: 60,
-                          color: AppColorsTheme.primary,
-                        ),
+                        child: _buildAppLogo(),
                       ),
 
                       const SizedBox(height: 32),
